@@ -19,7 +19,8 @@ export default class SignIn extends React.Component{
             desc: '',
             address: '',
             username: '',
-            password: ''
+            password: '',
+            gmail: '',
           }
         };
       }
@@ -28,9 +29,20 @@ export default class SignIn extends React.Component{
         e.preventDefault();
       }
       
-      onChange(key, value) {
-        this.state.form[key] = value;
-        this.forceUpdate();
+      onChange(e, name) {
+        // this.state.form[key] = value;
+        // this.forceUpdate();
+        const value = e.target.value;
+        switch (name) {
+            case "name":
+                this.setState({name: value})
+            case "username":
+                this.setState({username: value})
+            case "password":
+                this.setState({password: value})
+            case "gmail":
+                this.setState({gmail: value})
+        }
       }
       
       render() {
@@ -57,6 +69,7 @@ export default class SignIn extends React.Component{
                             <h5 className = "col-lg-2">Password</h5>
                             <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.form.password} onChange={this.onChange.bind(this, 'password')}></Input>
                         </Form.Item>
+
 
                          <Form.Item style={{marginTop: 30}}>
                             <Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign in</Button>

@@ -19,7 +19,8 @@ export default class SignUp extends React.Component{
             desc: '',
             address: '',
             username: '',
-            password: ''
+            password: '',
+            gmail:''
           }
         };
       }
@@ -28,9 +29,24 @@ export default class SignUp extends React.Component{
         e.preventDefault();
       }
       
-      onChange(key, value) {
-        this.state.form[key] = value;
-        this.forceUpdate();
+      onChange(e, name) {
+        // this.state.form[key] = value;
+        // this.forceUpdate();
+        const value = e.target.value;
+        switch (name) {
+            case "name":
+                this.setState({name: value});
+                break;
+            case "username":
+                this.setState({username: value});
+                break;
+            case "password":
+                this.setState({password: value});
+                break;
+            case "gmail":
+                this.setState({gmail: value});
+                break;
+        }
       }
       
       render() {
@@ -50,20 +66,26 @@ export default class SignUp extends React.Component{
 
                         <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
                             <h5 className = "col-lg-2">User name</h5>
-                            <Input className = "col-lg-10" value={this.state.form.username} onChange={this.onChange.bind(this, 'username')}></Input>
+                            <Input className = "col-lg-10" value={this.state.form.username} onChange={(e) => this.onChange(e, "username")} ></Input>
                         </Form.Item>
 
                         <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
                             <h5 className = "col-lg-2">Password</h5>
-                            <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.form.password} onChange={this.onChange.bind(this, 'password')}></Input>
+                            <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.form.password} onChange={(e) => this.onChange(e, "password")}></Input>
                         </Form.Item>
 
                         <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
                             <h5 className = "col-lg-2">Name</h5>
-                            <Input className = "col-lg-10" value={this.state.form.name} onChange={this.onChange.bind(this, 'name')}></Input>
+                            <Input className = "col-lg-10" value={this.state.form.name} onChange={(e) => this.onChange(e, "name")}></Input>
                         </Form.Item>
 
+
                         <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
+                            <h5 className = "col-lg-2">Gmail</h5>
+                            <Input className = "col-lg-10" value={this.state.form.gmail} onChange={(e) => this.onChange(e, "gmail")}></Input>
+                        </Form.Item>
+
+                        {/* <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
                             <h5 className = "col-lg-2">Address</h5>
                             <Input className = "col-lg-10" value={this.state.form.address} onChange={this.onChange.bind(this, 'address')}></Input>
                         </Form.Item>
@@ -113,7 +135,7 @@ export default class SignUp extends React.Component{
                         <Form.Item style={{marginLeft: "-160px"}}>
                             <h5 className = "col-lg-2">Description</h5>
                             <Input className = "col-lg-10" type="textarea" style={{width: 500}} value={this.state.form.desc} onChange={this.onChange.bind(this, 'desc')}></Input>
-                        </Form.Item>
+                        </Form.Item> */}
 
                         <Form.Item style={{marginTop: 30}}>
                             <Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign up</Button>
