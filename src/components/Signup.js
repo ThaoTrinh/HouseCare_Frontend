@@ -35,7 +35,6 @@ export default class SignUp extends React.Component{
   onSubmit(e) {
     e.preventDefault();
     console.log("aaaa")
-    this.props.history.push("/");
   }
   handleChangePosition(e) {
     this.setState({ position: e });

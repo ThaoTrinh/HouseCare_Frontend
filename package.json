@@ -48,7 +48,7 @@
     "react-loading-bar": "0.0.4",
     "react-meta-tags": "^0.3.0",
     "react-rangeslider": "^2.2.0",
-    "react-router": "^3.0.2",
+    "react-router": "^4.4.0-beta.6",
     "react-router-dom": "^4.3.1",
     "react-select": "^1.0.0-rc.7",
     "react-select-plus": "^1.0.0-rc.5",
