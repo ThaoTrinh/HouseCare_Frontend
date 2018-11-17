@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import { Button , Layout, Form, Input, Checkbox, Select, Radio, Switch, DatePicker, Slider } from 'element-react';
 import 'element-theme-default';
 import MainSlider from "./MainSlider"
@@ -17,7 +18,9 @@ export default class SignIn extends React.Component{
   }
 
   onSubmit(e) {
+
     e.preventDefault();
+    
   }
   handleChangeUsername(e){
     this.setState({username: e});
@@ -34,7 +37,7 @@ export default class SignIn extends React.Component{
     <Layout.Row>
       <Layout.Col span="12">
         <div className="grid-content bg-purple">
-          <img src="/logo/logup.jpg" style={{height: 640, width: 620}}/>
+          <img src="/logo/logup.jpg" style={{height: 900, width: 620}}/>
         </div>
       </Layout.Col>
 
@@ -55,7 +58,7 @@ export default class SignIn extends React.Component{
 
 
             <Form.Item style={{marginTop: 30}}>
-              <Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign In</Button>
+              <Link to='/'><Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign In</Button></Link>
               <Button style={{marginLeft: 140}}>Cancel</Button>
             </Form.Item>
 
