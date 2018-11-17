@@ -1,87 +1,68 @@
 import React from 'react';
-import { Button , Layout, Form, Input, Checkbox, Select, Radio, Switch, DatePicker } from 'element-react';
+import { Button , Layout, Form, Input, Checkbox, Select, Radio, Switch, DatePicker, Slider } from 'element-react';
 import 'element-theme-default';
 import MainSlider from "./MainSlider"
 
 export default class SignIn extends React.Component{
-    constructor(props) {
-        super(props);
-      
-        this.state = {
-          form: {
-            name: '',
-            sex: '',
-            date1: null,
-            date2: null,
-            public: false,
-            type: [],
-            position: '',
-            desc: '',
-            address: '',
-            username: '',
-            password: '',
-            gmail: '',
-          }
-        };
-      }
-      
-      onSubmit(e) {
-        e.preventDefault();
-      }
-      
-      onChange(e, name) {
-        // this.state.form[key] = value;
-        // this.forceUpdate();
-        const value = e.target.value;
-        switch (name) {
-            case "name":
-                this.setState({name: value})
-            case "username":
-                this.setState({username: value})
-            case "password":
-                this.setState({password: value})
-            case "gmail":
-                this.setState({gmail: value})
-        }
-      }
-      
-      render() {
-        return (
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+        username: '',
+        password: ''
+    };
 
-        <Layout.Row>
-            <Layout.Col span="12">
-                <div className="grid-content bg-purple">
-                    <img src="/logo/logup.jpg" style={{height: 500, width: 500}}/>
-                </div>
-            </Layout.Col>
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+  }
+  handleChangeUsername(e){
+    this.setState({username: e});
+  }
+
+  handleChangePassword(e){
+    this.setState({password: e});
+  }
 
 
-            <Layout.Col span="12">
-                <div className="grid-content bg-purple-light">
-                    <Form className="en-US" model={this.state.form} labelWidth="120" onSubmit={this.onSubmit.bind(this)}>
+  render() {
+    return (
 
-                        <Form.Item style={{marginLeft: "-160px", marginTop: 200}}>
-                            <h5 className = "col-lg-2">User name</h5>
-                            <Input className = "col-lg-10" value={this.state.form.username} onChange={this.onChange.bind(this, 'username')}></Input>
-                        </Form.Item>
-
-                        <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-                            <h5 className = "col-lg-2">Password</h5>
-                            <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.form.password} onChange={this.onChange.bind(this, 'password')}></Input>
-                        </Form.Item>
+    <Layout.Row>
+      <Layout.Col span="12">
+        <div className="grid-content bg-purple">
+          <img src="/logo/logup.jpg" style={{height: 640, width: 620}}/>
+        </div>
+      </Layout.Col>
 
 
-                         <Form.Item style={{marginTop: 30}}>
-                            <Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign in</Button>
-                            <Button style={{marginLeft: 140}}>Cancel</Button>
-                        </Form.Item>
-                       
-                        </Form>
-                </div>
-            </Layout.Col>
-          </Layout.Row>
+      <Layout.Col span="12">
+        <div className="grid-content bg-purple-light" style={{marginTop: 200}}>
+          <Form className="en-US" model={this.state} labelWidth="120" onSubmit={this.onSubmit.bind(this)}>
+
+            <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
+              <h5 className = "col-lg-2">User name</h5>
+              <Input className = "col-lg-10" value={this.state.username} onChange={this.handleChangeUsername}></Input>
+            </Form.Item>
+
+            <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
+              <h5 className = "col-lg-2">Password</h5>
+              <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.password} onChange={this.handleChangePassword}></Input>
+            </Form.Item>
 
 
-        )
-      }
+            <Form.Item style={{marginTop: 30}}>
+              <Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign In</Button>
+              <Button style={{marginLeft: 140}}>Cancel</Button>
+            </Form.Item>
+
+          </Form>
+        </div>
+      </Layout.Col>
+    </Layout.Row>
+    )
+  }
 }
