@@ -12,7 +12,9 @@ import {
   Slider
 } from 'element-react';
 import 'element-theme-default';
-import MainSlider from "./MainSlider"
+import MainSlider from "./MainSlider";
+
+import api from "./api";
 
 export default class SignUp extends React.Component{
   constructor(props) {
@@ -47,7 +49,19 @@ export default class SignUp extends React.Component{
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.history.push('/');
+    let name = this.state['name'];
+    let username = this.state['username'];
+    let password = this.state['password'];
+    let email = this.state['gmail'];
+
+    api.signup(username, password, email, name)
+      .then(status => {
+        // console.log(status);
+        this.props.history.push('/');
+      })
+      .catch(err => {
+        alert(err);
+      })
   }
   handleChange = name => value => {
     this.setState({[name]: value});
