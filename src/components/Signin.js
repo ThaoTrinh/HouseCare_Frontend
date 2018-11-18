@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+// import {Link} from 'react-router';
 import { Button , Layout, Form, Input, Checkbox, Select, Radio, Switch, DatePicker, Slider } from 'element-react';
 import 'element-theme-default';
 import MainSlider from "./MainSlider"
@@ -58,7 +58,7 @@ export default class SignIn extends React.Component{
 
 
             <Form.Item style={{marginTop: 30}}>
-              <Link to='/'><Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign In</Button></Link>
+              {/* <Link to='/'><Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign In</Button></Link> */}
               <Button style={{marginLeft: 140}}>Cancel</Button>
             </Form.Item>
 

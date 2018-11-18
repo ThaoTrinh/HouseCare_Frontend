@@ -1,5 +1,16 @@
 import React from 'react';
-import { Button , Layout, Form, Input, Checkbox, Select, Radio, Switch, DatePicker, Slider } from 'element-react';
+import {
+  Button,
+  Layout,
+  Form,
+  Input,
+  Checkbox,
+  Select,
+  Radio,
+  Switch,
+  DatePicker,
+  Slider
+} from 'element-react';
 import 'element-theme-default';
 import MainSlider from "./MainSlider"
 
@@ -13,7 +24,7 @@ export default class SignUp extends React.Component{
         name: '',
         gmail: '',
         address:'',
-        date:'',
+        date: new Date(),
         sex: 'female',
         description: '',
         position: 'helper',
@@ -30,12 +41,18 @@ export default class SignUp extends React.Component{
     this.handleChangeAddress = this.handleChangeAddress.bind(this);
     this.handleChangePosition = this.handleChangePosition.bind(this);
     this.handleChangeExperience = this.handleChangeExperience.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   onSubmit(e) {
     e.preventDefault();
-    console.log("aaaa")
+    this.props.history.push('/');
   }
+  handleChange(e) {
+
+  }
+
   handleChangePosition(e) {
     this.setState({ position: e });
   }
@@ -94,7 +111,7 @@ export default class SignUp extends React.Component{
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">User name</h5>
-              <Input className = "col-lg-10" value={this.state.username} onChange={this.handleChangeUsername}></Input>
+              <Input className = "col-lg-10" name="username" value={this.state.username} onChange={this.handleChangeUsername}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>

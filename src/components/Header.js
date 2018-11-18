@@ -1,8 +1,8 @@
-require('../styles/App.css');
 import React from 'react';
 import { Button , Layout, Menu } from 'element-react';
 import 'element-theme-default';
 import MainSlider from "./MainSlider"
+require('../styles/App.css');
 
 class Header extends React.Component {
 

@@ -1,10 +1,14 @@
-require('../styles/App.css');
 import React from 'react';
 import { Button , Layout, Menu } from 'element-react';
+import {Route} from 'react-router-dom';
 import 'element-theme-default';
-import MainSlider from "./MainSlider"
-import Header from './Header'
-import Footer from './Footer'
+import MainSlider from "./MainSlider";
+import Header from './Header';
+import Footer from './Footer';
+import SignIn from './Signin';
+import SignUp from './Signup';
+require('../styles/App.css');
+
 class App extends React.Component {
 
   constructor() {
@@ -24,7 +28,10 @@ class App extends React.Component {
       <div>
         <Header />
         <div>
-          {this.props.children}
+          {/* {this.props.children} */}
+          <Route exact path="" component = {MainSlider} />
+          <Route path="/signup" component = {SignUp} />
+          <Route path="/signin" component = {SignIn} />
         </div>
         <Footer/>
     </div>
