@@ -7,7 +7,6 @@ import SignUp from './components/Signup'
 import SignIn from './components/Signin'
 // Render the main component into the dom
 
-import ReactBootstrapCarousel from "react-bootstrap-carousel";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
 import "./styles/font-awesome/css/font-awesome.min.css";
