@@ -3,7 +3,7 @@ import React from 'react';
 import { Button , Layout, Form, Input, Checkbox, Select, Radio, Switch, DatePicker, Slider } from 'element-react';
 import 'element-theme-default';
 import MainSlider from "./MainSlider"
-
+import api from "./api";
 export default class SignIn extends React.Component{
   constructor(props) {
     super(props);
@@ -20,7 +20,17 @@ export default class SignIn extends React.Component{
   onSubmit(e) {
 
     e.preventDefault();
-    
+    let username = this.state['username'];
+    let password = this.state['password'];
+
+    api.signin(username, password)
+      .then(status => {
+        // console.log(status);
+        this.props.history.push('/');
+      })
+      .catch(err => {
+        alert(err);
+      })
   }
   handleChangeUsername(e){
     this.setState({username: e});
@@ -58,7 +68,7 @@ export default class SignIn extends React.Component{
 
 
             <Form.Item style={{marginTop: 30}}>
-              {/* <Link to='/'><Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign In</Button></Link> */}
+              <Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign In</Button>
               <Button style={{marginLeft: 140}}>Cancel</Button>
             </Form.Item>
 

@@ -35,6 +35,28 @@ var signup = (username, password, email, name) => {
     })
 }
 
+var signin = (username, password) => {
+    return new Promise((resolve, reject) => {
+    user_instance.post(
+        '/signin',
+        {
+            'username': username,
+            'password': password
+        })
+        .then(response => {
+            console.log(response);
+            if (response['message']) {
+                return reject(response['message']);
+            }
+            return resolve(response['success']);
+        })
+        .catch(err => {
+            return reject(false);
+        })
+    })
+}
+
 module.exports = {
-    signup
+    signup,
+    signin
 }
