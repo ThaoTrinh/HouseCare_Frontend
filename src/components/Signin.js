@@ -1,20 +1,27 @@
 import React from 'react';
-// import {Link} from 'react-router';
-import { Button , Layout, Form, Input, Checkbox, Select, Radio, Switch, DatePicker, Slider } from 'element-react';
+import {
+  Button,
+  Layout,
+  Form,
+  Input,
+} from 'element-react';
 import 'element-theme-default';
-import MainSlider from "./MainSlider"
 import api from "./api";
+
 export default class SignIn extends React.Component{
   constructor(props) {
     super(props);
   
     this.state = {
         username: '',
-        password: ''
+        password: '',
+        signin: false
     };
 
-    this.handleChangeUsername = this.handleChangeUsername.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
+    // this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    // this.handleChangePassword = this.handleChangePassword.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   onSubmit(e) {
@@ -26,19 +33,26 @@ export default class SignIn extends React.Component{
     api.signin(username, password)
       .then(status => {
         // console.log(status);
+        this.setState({signin: true});
+        sessionStorage.setItem('username', username);
         this.props.history.push('/');
       })
       .catch(err => {
         alert(err);
       })
   }
-  handleChangeUsername(e){
+
+  handleChange = name => value => {
+    this.setState({[name]: value});
+  }
+
+  /* handleChangeUsername(e){
     this.setState({username: e});
   }
 
   handleChangePassword(e){
     this.setState({password: e});
-  }
+  } */
 
 
   render() {
@@ -47,7 +61,7 @@ export default class SignIn extends React.Component{
     <Layout.Row>
       <Layout.Col span="12">
         <div className="grid-content bg-purple">
-          <img src="/logo/logup.jpg" style={{height: 900, width: 620}}/>
+          <img src="/logo/logup.jpg" alt="logo" style={{height: 640, width: 620}}/>
         </div>
       </Layout.Col>
 
@@ -58,12 +72,12 @@ export default class SignIn extends React.Component{
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">User name</h5>
-              <Input className = "col-lg-10" value={this.state.username} onChange={this.handleChangeUsername}></Input>
+              <Input className = "col-lg-10" value={this.state.username} onChange={this.handleChange('username')}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Password</h5>
-              <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.password} onChange={this.handleChangePassword}></Input>
+              <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.password} onChange={this.handleChange('password')}></Input>
             </Form.Item>
 
 

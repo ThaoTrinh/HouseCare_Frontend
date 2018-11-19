@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button , Layout, Menu } from 'element-react';
 import {Route} from 'react-router-dom';
 import 'element-theme-default';
-import MainSlider from "./MainSlider";
+import MainSlider from './MainSlider';
 import Header from './Header';
 import Footer from './Footer';
 import SignIn from './Signin';
@@ -22,7 +21,7 @@ class App extends React.Component {
       showPopup: !this.state.showPopup
     });
   }
-  
+
   render() {
     return (
       <div>
@@ -31,12 +30,11 @@ class App extends React.Component {
           {/* {this.props.children} */}
           <Route exact path="" component = {MainSlider} />
           <Route path="/signup" component = {SignUp} />
-          <Route path="/signin" component = {SignIn} />
+          <Route path="/signin" component = {SignIn} header = {Header}/>
         </div>
         <Footer/>
-    </div>
-    
-    )
+      </div>
+    );
   }
 
   onSelect() {}

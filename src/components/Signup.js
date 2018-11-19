@@ -4,22 +4,18 @@ import {
   Layout,
   Form,
   Input,
-  Checkbox,
-  Select,
   Radio,
-  Switch,
   DatePicker,
   Slider
 } from 'element-react';
 import 'element-theme-default';
-import MainSlider from "./MainSlider";
 
 import api from "./api";
 
 export default class SignUp extends React.Component{
   constructor(props) {
     super(props);
-  
+
     this.state = {
         username: '',
         password: '',
@@ -32,17 +28,6 @@ export default class SignUp extends React.Component{
         position: 'helper',
         experience: 0
     };
-
-    // this.handleChangeUsername = this.handleChangeUsername.bind(this);
-    // this.handleChangePassword = this.handleChangePassword.bind(this);
-    // this.handleChangeName = this.handleChangeName.bind(this);
-    // this.handleChangeDescription = this.handleChangeDescription.bind(this);
-    // this.handleChangeDate = this.handleChangeDate.bind(this);
-    // this.handleChangeGmail = this.handleChangeGmail.bind(this);
-    // this.handleChangeSex = this.handleChangeSex.bind(this);
-    // this.handleChangeAddress = this.handleChangeAddress.bind(this);
-    // this.handleChangePosition = this.handleChangePosition.bind(this);
-    // this.handleChangeExperience = this.handleChangeExperience.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -67,46 +52,6 @@ export default class SignUp extends React.Component{
     this.setState({[name]: value});
   }
 
-  // handleChangePosition(e) {
-  //   this.setState({ position: e });
-  // }
-
-  // handleChangeExperience(e) {
-  //   this.setState({ experience: e });
-  // }
-
-  // handleChangeUsername(e){
-  //   this.setState({username: e});
-  // }
-
-  // handleChangePassword(e){
-  //   this.setState({password: e});
-  // }
-
-  // handleChangeName(e){
-  //   this.setState({name: e});
-  // }
-
-  // handleChangeAddress(e){
-  //   this.setState({address: e});
-  // }
-
-  // handleChangeGmail(e){
-  //   this.setState({gmail: e});
-  // }
-
-  // handleChangeDescription(e){
-  //   this.setState({description: e});
-  // }
-
-  // handleChangeDate(e){
-  //   this.setState({date: e});
-  // }
-
-  // handleChangeSex(e){
-  //   this.setState({sex: e});
-  // }
-
 
   render() {
     return (
@@ -114,7 +59,7 @@ export default class SignUp extends React.Component{
     <Layout.Row>
       <Layout.Col span="12">
         <div className="grid-content bg-purple">
-          <img src="/logo/logup.jpg" style={{height: 640, width: 620}}/>
+          <img src="/logo/logup.jpg" alt="logo" style={{height: 800, width: 620}}/>
         </div>
       </Layout.Col>
 
