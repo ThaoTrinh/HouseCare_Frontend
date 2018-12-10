@@ -6,6 +6,8 @@ import {
   Route,
 } from 'react-router-dom';
 import App from './components/App';
+import Navigation from './components/navigation';
+
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-carousel/dist/react-bootstrap-carousel.css';
