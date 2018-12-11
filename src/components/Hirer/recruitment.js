@@ -13,7 +13,6 @@ import {
 } from 'element-react';
 import 'element-theme-default';
 
-import api from "./api";
 
 export default class Recruitment extends React.Component{
   constructor(props) {

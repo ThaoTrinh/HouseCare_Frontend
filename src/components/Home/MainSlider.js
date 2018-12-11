@@ -1,7 +1,7 @@
 import React from 'react';
 import {Carousel} from 'element-react';
 import 'element-theme-default';
-require('../styles/App.css');
+require('../../styles/App.css');
 
 export default class MainSlider extends React.Component{
   constructor(props){

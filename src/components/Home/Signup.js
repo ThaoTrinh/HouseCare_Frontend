@@ -10,7 +10,7 @@ import {
 } from 'element-react';
 import 'element-theme-default';
 
-import api from "./api";
+import api from "../api";
 
 export default class SignUp extends React.Component{
   constructor(props) {

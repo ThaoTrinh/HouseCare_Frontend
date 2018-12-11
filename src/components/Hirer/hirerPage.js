@@ -3,12 +3,12 @@ import {Route} from 'react-router-dom';
 import 'element-theme-default';
 import {Layout, Switch, Client} from 'element-react';
 import SliderBar from './slidebar';
-import Profile from './profile';
-import ChangePassword from './changePassword';
-import Schedule from './schedule';
+import Profile from '../profile';
+import ChangePassword from '../changePassword';
+import Schedule from '../schedule';
 import Recruitment from './recruitment';
 
-require('../styles/App.css');
+require('../../styles/App.css');
 
 export default class HelperPage extends React.Component {
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {Layout, Menu} from 'element-react';
 import 'element-theme-default';
 import Ionicon from 'react-ionicons';
-require('../styles/App.css');
+require('../../styles/App.css');
 
 class Header extends React.Component {
 
