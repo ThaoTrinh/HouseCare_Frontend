@@ -6,12 +6,13 @@ import {
   Input,
 } from 'element-react';
 import 'element-theme-default';
-import api from "../api";
+
+import api from "components/api";
 
 export default class SignIn extends React.Component{
   constructor(props) {
     super(props);
-  
+
     this.state = {
         username: '',
         password: '',

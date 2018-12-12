@@ -14,10 +14,10 @@ import {
 import 'element-theme-default';
 
 
-export default class Recruitment extends React.Component{
+export default class Recruitment extends React.Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       form: {
         address: '',
@@ -31,25 +31,26 @@ export default class Recruitment extends React.Component{
 
     this.handleChange = this.handleChange.bind(this);
   }
-  
-  onSubmit(e) {
-    e.preventDefault();
-  }
-  
-  
-  handleChange = name => value => {
-    this.setState({[name]: value});
-  }
-  
+
+  onSubmit(e) { e.preventDefault(); }
+
+
+  handleChange = name => value => { this.setState({[name]: value}); }
+
   render() {
     return (
       <div style={{width: 800, marginTop: 100, marginLeft: 100}}>
-      <Form className="en-US" model={this.state.form} labelWidth="120" onSubmit={this.onSubmit.bind(this)}>
+      <Form className="en-US" model={
+      this.state.form} labelWidth="120" onSubmit={this.onSubmit.bind(this)}>
         <Form.Item label="Address" >
-          <Input value={this.state.address} onChange={this.handleChange('address')} style={{marginLeft: 30}}></Input>
+          <Input value={
+      this.state.address} onChange={
+      this.handleChange('address')} style={{marginLeft: 30}}></Input>
         </Form.Item>
         <Form.Item label="Salary" >
-          <Select value={this.state.salary} style={{marginLeft: 30}} placeholder="Please select salary for helper">
+          <Select value={
+      this.state.salary} style={
+      { marginLeft: 30 }} placeholder="Please select salary for helper">
             <Select.Option label="50.000/hour" value="1"></Select.Option>
             <Select.Option label="75.000/hour" value="2"></Select.Option>
             <Select.Option label="100.000/hour" value="3"></Select.Option>
@@ -81,7 +82,7 @@ export default class Recruitment extends React.Component{
             </Form.Item>
           </Layout.Col>
         </Form.Item>
-       
+
         <Form.Item label="Activity type">
           <Checkbox.Group value={this.state.type} onChange={this.handleChange('type')} >
             <Checkbox label="Cham soc tre" name="type" style={{marginRight: 250, marginLeft: 30}}></Checkbox>
@@ -90,9 +91,11 @@ export default class Recruitment extends React.Component{
             <Checkbox label="Sua chua cac thiet bi" name="type" style={{marginLeft: "-33px"}}></Checkbox>
           </Checkbox.Group>
         </Form.Item>
-        
+
         <Form.Item label="Description">
-          <Input type="textarea" value={this.state.form.desc} style={{marginLeft: 30, width: 550}}onChange={this.handleChange('desc')}></Input>
+          <Input type="textarea" value={
+      this.state.form.desc} style={
+      { marginLeft: 30, width: 550 }}onChange={this.handleChange('desc')}></Input>
         </Form.Item>
         <Form.Item>
           <Button type="primary" nativeType="submit" style={{marginLeft: 200, marginRight: 100, marginTop: 50}}>Create</Button>
