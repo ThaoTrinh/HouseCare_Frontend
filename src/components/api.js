@@ -55,7 +55,29 @@ var signin = (username, password) => {
   });
 };
 
+var changepassword = (username, password, new_password) => {
+  return new Promise((resolve, reject) => {
+    user_instance
+      .post('/changepassword', {
+        username: username,
+        password: password,
+        new_password: new_password,
+      })
+      .then(response => {
+        // console.log(response);
+        if (response['message']) {
+          return reject(response['message']);
+        }
+        return resolve(response['success']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
 module.exports = {
   signup,
   signin,
+  changepassword,
 };

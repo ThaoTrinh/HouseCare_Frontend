@@ -10,6 +10,7 @@ class Header extends React.Component {
     this.state = {
       showPopup: false,
       username: null,
+      isHelper: false,
     };
     this.state.username = sessionStorage.getItem('username');
   }
@@ -32,11 +33,23 @@ class Header extends React.Component {
           </a>
         </div>
       );
-    } else {
+    } else if (this.state.isHelper) {
       userbar = (
         <div>
           <Ionicon icon="contact" fontSize="35px" />
           <a href="/user">
+            <Menu.Item index="3">{this.state.username}</Menu.Item>
+          </a>
+          <a href="/signout">
+            <Menu.Item index="4">Sign out</Menu.Item>
+          </a>
+        </div>
+      );
+    } else {
+      userbar = (
+        <div>
+          <Ionicon icon="contact" fontSize="35px" />
+          <a href="/user1">
             <Menu.Item index="3">{this.state.username}</Menu.Item>
           </a>
           <a href="/signout">
