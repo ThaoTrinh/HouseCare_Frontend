@@ -75,7 +75,7 @@ export default class Profile extends React.Component{
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Gmail</h5>
               <Input className = "col-lg-10" value={this.state.gmail} onChange={this.handleChange('gmail')}></Input>
-            </Form.Item> 
+            </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Address</h5>
@@ -104,13 +104,13 @@ export default class Profile extends React.Component{
                 <h5 className = "col-lg-2" style={{marginRight: 15}}>Sex</h5>
                 <Radio value="female" checked={this.state.sex === 'female'} onChange={this.handleChange('sex')}>Female</Radio>
                 <Radio value="male" checked={this.state.sex === 'male'} onChange={this.handleChange('sex')}>Male</Radio>
-            </Form.Item> 
+            </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px"}}>
               <h5 className = "col-lg-2" style={{marginRight: 15}}>Position</h5>
               <Radio value="helper" checked={this.state.positon === 'helper'} onChange={this.handleChange('position')}>Helper</Radio>
               <Radio value="hirer" checked={this.state.position === 'hirer'} onChange={this.handleChange('position')}>Hire</Radio>
-            </Form.Item> 
+            </Form.Item>
 
              <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Description</h5>

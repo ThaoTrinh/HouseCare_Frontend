@@ -1,6 +1,8 @@
 import React from 'react';
 import { Table } from 'element-react';
 
+import getjob from 'components/api';
+
 export default class Schedule extends React.Component {
   constructor(props) {
     super(props);
@@ -105,6 +107,16 @@ export default class Schedule extends React.Component {
         },
       ],
     };
+  }
+
+  componentDidMount() {
+    getjob()
+      .then(data => {
+        this.setState({ data: data });
+      })
+      .catch(() => {
+        alert('cannot fetch job data');
+      });
   }
 
   render() {
