@@ -6,12 +6,8 @@ const API_URL = process.env.PROD
   ? api_config.production.API_URL
   : api_config.development.API_URL;
 
-const helper_instance = axios.create({
-  baseURL: API_URL + '/helpers',
-});
-
-const owner_instance = axios.create({
-  baseURL: API_URL + '/owners',
+const job_instance = axios.create({
+  baseURL: API_URL + '/works',
 });
 
 const users_instance = axios.create({
@@ -81,12 +77,30 @@ var changepassword = (username, password, new_password) => {
   });
 };
 
+var getlistjob = () => {
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer' + sessionStorage.getItem('jwt');
+    job_instance.header['authentication'] = header;
+    job_instance
+      .get('/')
+      .then(response => {
+        if (response['data']['success'] != true) {
+          return reject(response['data']['message']);
+        }
+        return resolve(response['data']['data']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
 var getjob = id => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer' + sessionStorage.getItem('jwt');
-    users_instance.header = header;
-    users_instance
-      .get('/jobs/' + id)
+    job_instance.header['authentication'] = header;
+    job_instance
+      .get('/' + id)
       .then(response => {
         if (response['data']['success'] != true) {
           return reject(response['data']['message']);
@@ -117,7 +131,7 @@ var getuser = id => {
 
 var acceptjob = id => {
   return new Promise((resolve, reject) => {
-    helper_instance
+    job_instance
       .put('/jobs/' + id)
       .then(response => {
         if (response['data']['success'] != true) {
@@ -133,7 +147,7 @@ var acceptjob = id => {
 
 var createjob = (time, place, duration, type) => {
   return new Promise((resolve, reject) => {
-    owner_instance
+    job_instance
       .post('/jobs', {
         time: time,
         place: place,
@@ -155,9 +169,10 @@ var createjob = (time, place, duration, type) => {
 module.exports = {
   signup,
   signin,
+  getuser,
   changepassword,
   getjob,
-  getuser,
+  getlistjob,
   acceptjob,
   createjob,
 };
