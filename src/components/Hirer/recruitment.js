@@ -12,6 +12,7 @@ import {
   Checkbox
 } from 'element-react';
 import 'element-theme-default';
+import * as api from 'components/api';
 
 
 export default class Recruitment extends React.Component {
@@ -19,20 +20,42 @@ export default class Recruitment extends React.Component {
     super(props);
 
     this.state = {
-      form: {
         address: '',
         salary: '',
-        time: null,
+        timespan: null,
         date: null,
-        type: [],
+        worktime: null,
+        type: '',
         desc: ''
-      }
     };
 
     this.handleChange = this.handleChange.bind(this);
   }
 
-  onSubmit(e) { e.preventDefault(); }
+    onSubmit(e) {
+        const typeWork = this.state.type;
+        const description = this.state.desc;
+        const date = this.state.date;
+        const worktime = this.state.worktime;
+        const location = this.state.location;
+        const salary = this.state.salary;
+        const work_epocktime = date + worktime;
+
+        const time_to_work = date.getTime() + 1000 * (worktime.getHours() * 60 * 60 + worktime.getMinutes() * 60);
+
+        // work duration, not yet in UI, default to 3hours
+        let timespan = this.state.timespan;
+        timespan = 3 * 60 * 60 * 1000;
+
+        api.createWork(typeWork, description, work_epocktime, timespan, location, salary)
+            .then((data) => {
+                alert(data);
+            })
+            .catch((err) => {
+                alert(err);
+            });
+        e.preventDefault();
+    }
 
 
   handleChange = name => value => { this.setState({[name]: value}); }
@@ -41,7 +64,7 @@ export default class Recruitment extends React.Component {
     return (
       <div style={{width: 800, marginTop: 100, marginLeft: 100}}>
       <Form className="en-US" model={
-      this.state.form} labelWidth="120" onSubmit={this.onSubmit.bind(this)}>
+      this.state} labelWidth="120" onSubmit={this.onSubmit.bind(this)}>
         <Form.Item label="Address" >
           <Input value={
       this.state.address} onChange={
@@ -74,10 +97,10 @@ export default class Recruitment extends React.Component {
           <Layout.Col span="11">
             <Form.Item prop="time" labelWidth="0px">
               <TimePicker
-                value={this.state.time}
+                value={this.state.worktime}
                 selectableRange="18:30:00 - 20:30:00"
                 placeholder="Pick a time"
-                onChange={this.handleChange('time')}
+                onChange={this.handleChange('worktime')}
               />
             </Form.Item>
           </Layout.Col>
@@ -94,7 +117,7 @@ export default class Recruitment extends React.Component {
 
         <Form.Item label="Description">
           <Input type="textarea" value={
-      this.state.form.desc} style={
+      this.state.desc} style={
       { marginLeft: 30, width: 550 }}onChange={this.handleChange('desc')}></Input>
         </Form.Item>
         <Form.Item>

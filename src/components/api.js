@@ -77,8 +77,8 @@ var changepassword = (username, password, new_password) => {
 
 var getlistjob = () => {
   return new Promise((resolve, reject) => {
-    let header = 'Bearer' + sessionStorage.getItem('jwt');
-    job_instance.header['Authorizationn'] = header;
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    job_instance.defaults.headers.common['Authorizationn'] = header;
     job_instance
       .get('/')
       .then(response => {
@@ -95,8 +95,8 @@ var getlistjob = () => {
 
 var getWork = id => {
   return new Promise((resolve, reject) => {
-    let header = 'Bearer' + sessionStorage.getItem('jwt');
-    job_instance.header['Authorization'] = header;
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
       .get('/' + id)
       .then(response => {
@@ -113,7 +113,7 @@ var getWork = id => {
 
 var getuser = id => {
   return new Promise((resolve, reject) => {
-    let header = 'Bearer' + sessionStorage.getItem('jwt');
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
     users_instance.header['Authorization'] = header;
     users_instance
       .get('/' + id)
@@ -129,14 +129,13 @@ var getuser = id => {
   });
 };
 
-var chooseWork = (userId, workId) => {
+var chooseWork = (workId) => {
   return new Promise((resolve, reject) => {
-    let header = 'Bearer' + sessionStorage.getItem('jwt');
-    job_instance.header['Authorization'] = header;
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
       .put('/' + workId,{
-        userId: userId,
-        workId: workId,
+        workId: workId
       })
       .then(response => {
         if (response['data']['success'] != true) {
@@ -150,24 +149,23 @@ var chooseWork = (userId, workId) => {
   });
 };
 
-var createWork = (typeList, description, time, location, salary, userId) => {
+var createWork = (typeWork, description, time, timespan, location, salary) => {
   return new Promise((resolve, reject) => {
-    let header = 'Bearer' + sessionStorage.getItem('jwt');
-    job_instance.header['Authorization'] = header;
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
       .post('/', {
-        typeList: typeList,
+        typeList: typeWork,
         description: description,
         time: time,
         location: location,
-        salary: salary,
-        userId: userId,
+        salary: salary
       })
       .then(response => {
         if (response['data']['success'] != true) {
           return reject(response['data']['message']);
         }
-        return resolve(response['data']['success']);
+        return resolve(response['data']['data']);
       })
       .catch(err => {
         return reject(err);
