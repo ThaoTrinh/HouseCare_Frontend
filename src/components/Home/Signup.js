@@ -26,7 +26,7 @@ export default class SignUp extends React.Component{
         sex: 'female',
         description: '',
         position: 'helper',
-        experience: 0
+        experience: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,8 +38,9 @@ export default class SignUp extends React.Component{
     let username = this.state['username'];
     let password = this.state['password'];
     let email = this.state['gmail'];
+    let role = this.state['position'] === 'helper' ? 0 : 1 ;
 
-    api.signup(username, password, email, name)
+    api.signup(username, password, email, name, role)
       .then(status => {
         // console.log(status);
         this.props.history.push('/');

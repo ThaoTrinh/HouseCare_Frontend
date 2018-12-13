@@ -14,7 +14,7 @@ const users_instance = axios.create({
   baseURL: API_URL + '/users',
 });
 
-var signup = (username, password, email, name, type) => {
+var signup = (username, password, email, name, role) => {
   return new Promise((resolve, reject) => {
     users_instance
       .post('/signup', {
@@ -22,7 +22,7 @@ var signup = (username, password, email, name, type) => {
         password: password,
         email: email,
         name: name,
-        type: type,
+        role: role,
       })
       .then(response => {
         if (response['data']['success'] != true) {
@@ -47,9 +47,7 @@ var signin = (username, password) => {
         if (response['data']['success'] != true) {
           return reject(response['data']['message']);
         }
-        const jwt = response['data']['data']['jwt'];
-        sessionStorage.setItem('jwt', jwt);
-        return resolve(response['data']['success']);
+        return resolve(response['data']['data']);
       })
       .catch(err => {
         return reject(err);
@@ -80,7 +78,7 @@ var changepassword = (username, password, new_password) => {
 var getlistjob = () => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer' + sessionStorage.getItem('jwt');
-    job_instance.header['authentication'] = header;
+    job_instance.header['Authorizationn'] = header;
     job_instance
       .get('/')
       .then(response => {
@@ -95,10 +93,10 @@ var getlistjob = () => {
   });
 };
 
-var getjob = id => {
+var getWork = id => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer' + sessionStorage.getItem('jwt');
-    job_instance.header['authentication'] = header;
+    job_instance.header['Authorization'] = header;
     job_instance
       .get('/' + id)
       .then(response => {
@@ -115,6 +113,8 @@ var getjob = id => {
 
 var getuser = id => {
   return new Promise((resolve, reject) => {
+    let header = 'Bearer' + sessionStorage.getItem('jwt');
+    users_instance.header['Authorization'] = header;
     users_instance
       .get('/' + id)
       .then(response => {
@@ -129,10 +129,15 @@ var getuser = id => {
   });
 };
 
-var acceptjob = id => {
+var chooseWork = (userId, workId) => {
   return new Promise((resolve, reject) => {
+    let header = 'Bearer' + sessionStorage.getItem('jwt');
+    job_instance.header['Authorization'] = header;
     job_instance
-      .put('/jobs/' + id)
+      .put('/' + workId,{
+        userId: userId,
+        workId: workId,
+      })
       .then(response => {
         if (response['data']['success'] != true) {
           return reject(response['data']['message']);
@@ -145,14 +150,18 @@ var acceptjob = id => {
   });
 };
 
-var createjob = (time, place, duration, type) => {
+var createWork = (typeList, description, time, location, salary, userId) => {
   return new Promise((resolve, reject) => {
+    let header = 'Bearer' + sessionStorage.getItem('jwt');
+    job_instance.header['Authorization'] = header;
     job_instance
-      .post('/jobs', {
+      .post('/', {
+        typeList: typeList,
+        description: description,
         time: time,
-        place: place,
-        duration: duration,
-        type: type,
+        location: location,
+        salary: salary,
+        userId: userId,
       })
       .then(response => {
         if (response['data']['success'] != true) {
@@ -171,8 +180,8 @@ module.exports = {
   signin,
   getuser,
   changepassword,
-  getjob,
+  getWork,
   getlistjob,
-  acceptjob,
-  createjob,
+  chooseWork,
+  createWork,
 };

@@ -8,17 +8,25 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      showPopup: false,
+      //showPopup: false,
       username: null,
-      isHelper: false,
+      role: null,
     };
     this.state.username = sessionStorage.getItem('username');
+    this.state.role = sessionStorage.getItem('role');
+    this.handleSignout = this.handleSignout.bind(this);
   }
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup,
     });
+    alert("b");
   }
+
+  handleSignout(){
+    alert("adhfj");
+  }
+
 
   render() {
     let userbar;
@@ -33,27 +41,29 @@ class Header extends React.Component {
           </a>
         </div>
       );
-    } else if (this.state.isHelper) {
+    } else if (this.state.role == 0) {
       userbar = (
         <div>
           <Ionicon icon="contact" fontSize="35px" />
           <a href="/user">
             <Menu.Item index="3">{this.state.username}</Menu.Item>
           </a>
-          <a href="/signout">
-            <Menu.Item index="4">Sign out</Menu.Item>
+          <a href="/">
+            <Menu.Item index="4" onClick = {this.handleSignout(this)}>Sign out</Menu.Item>
+
           </a>
         </div>
       );
     } else {
       userbar = (
+        
         <div>
           <Ionicon icon="contact" fontSize="35px" />
           <a href="/user1">
             <Menu.Item index="3">{this.state.username}</Menu.Item>
           </a>
-          <a href="/signout">
-            <Menu.Item index="4">Sign out</Menu.Item>
+          <a>
+            <Menu.Item index="4" onClick = {this.handleSignout(this)}>Sign out</Menu.Item>
           </a>
         </div>
       );
@@ -100,6 +110,8 @@ class Header extends React.Component {
   }
 
   onSelect() {}
+
+  
 }
 
 export default Header;

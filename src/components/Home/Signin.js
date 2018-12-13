@@ -32,10 +32,15 @@ export default class SignIn extends React.Component{
     let password = this.state['password'];
 
     api.signin(username, password)
-      .then(status => {
+      .then(data => {
         // console.log(status);
         this.setState({signin: true});
-        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('username', data.username);
+        sessionStorage.setItem('role', data.role);
+        sessionStorage.setItem('jwt', data.jwt);
+        // alert(sessionStorage.getItem('username'));
+        // alert(sessionStorage.getItem('role'));
+
         this.props.history.push('/');
       })
       .catch(err => {
