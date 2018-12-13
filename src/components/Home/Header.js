@@ -24,13 +24,15 @@ class Header extends React.Component {
   }
 
   handleSignout(){
-    alert("adhfj");
+    sessionStorage.setItem('username', null);
+    this.setState({
+      username: null
+    })
   }
-
 
   render() {
     let userbar;
-    if (this.state.username == null) {
+    if (this.state.username == "null") {
       userbar = (
         <div>
           <a href="/signin">
@@ -48,8 +50,8 @@ class Header extends React.Component {
           <a href="/user">
             <Menu.Item index="3">{this.state.username}</Menu.Item>
           </a>
-          <a href="/">
-            <Menu.Item index="4" onClick = {this.handleSignout(this)}>Sign out</Menu.Item>
+          <a href="/" onClick={this.handleSignout}>
+            <Menu.Item index="4" >Sign out</Menu.Item>
 
           </a>
         </div>
@@ -62,8 +64,8 @@ class Header extends React.Component {
           <a href="/user1">
             <Menu.Item index="3">{this.state.username}</Menu.Item>
           </a>
-          <a>
-            <Menu.Item index="4" onClick = {this.handleSignout(this)}>Sign out</Menu.Item>
+          <a href="/" onClick={this.handleSignout}>
+            <Menu.Item index="4">Sign out</Menu.Item>
           </a>
         </div>
       );
