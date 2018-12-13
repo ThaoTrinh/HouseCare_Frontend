@@ -64,7 +64,7 @@ export default class Profile extends React.Component{
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Password</h5>
-              <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.password} onChange={this.handleChange('password')}></Input>
+              <Input className = "col-lg-10" style={{width: 565}} type = "password" value={this.state.password} onChange={this.handleChange('password')}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
@@ -83,7 +83,7 @@ export default class Profile extends React.Component{
             </Form.Item>
 
                 <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-                  <h5 className = "col-lg-4" style={{marginRight: "-118px"}}>Date of birth</h5>
+                  <h5 className = "col-lg-4" style={{marginRight: "-137px"}}>Date of birth</h5>
                   <Form.Item prop="date1" labelWidth="0px" className = "col-lg-8">
                     <DatePicker
                     value={this.state.date}
@@ -114,7 +114,7 @@ export default class Profile extends React.Component{
 
              <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Description</h5>
-              <Input className = "col-lg-10" type="textarea" style={{width: 500, marginTop: 40}} value={this.state.description} onChange={this.handleChange('description')}></Input>
+              <Input className = "col-lg-10" type="textarea" style={{width: 558, marginTop: 40}} value={this.state.description} onChange={this.handleChange('description')}></Input>
               </Form.Item>
 
             <Form.Item style={{marginTop: 30}}>

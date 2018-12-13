@@ -109,15 +109,15 @@ export default class Schedule extends React.Component {
     };
   }
 
-  componentDidMount() {
-    getjob()
-      .then(data => {
-        this.setState({ data: data });
-      })
-      .catch(() => {
-        alert('cannot fetch job data');
-      });
-  }
+  // componentDidMount() {
+  //   getjob()
+  //     .then(data => {
+  //       this.setState({ data: data });
+  //     })
+  //     .catch(() => {
+  //       alert('cannot fetch job data');
+  //     });
+  // }
 
   render() {
     return (

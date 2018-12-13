@@ -12,30 +12,36 @@ class Footer extends React.Component {
           >
             <div
               className="column col-lg-6 col-md-4 col-sm-12 col-xs-12"
-              style={{ left: 150 }}
+              style={{ left: 120 }}
             >
-              <h3 className="footer-title">BKU BlockChain Labs</h3>
+              <h3 className="footer-title" style={{ left: 0 }}>
+                BKU BlockChain Labs
+              </h3>
               <p>
                 Copyright
                 <i className="fa fa-copyright" />
                 2017. All right reserved.
               </p>
               <p>
-                <i className="fa fa-envelope" /> Email: thuthaocse@gmail.com
-              </p>
-              <p>
                 <i className="fa fa-home" /> Địa chỉ: TpHCM
-              </p>
-              <p>
-                <i className="fa fa-mobile" /> Số điện thoại: 0342788099
               </p>
             </div>
 
-            <div className="column col-lg-3 col-md-4 col-sm-12 col-xs-12">
+            <div
+              className="column col-lg-3 col-md-4 col-sm-12 col-xs-12"
+              style={{ left: '-100px' }}
+            >
               <h3 className="footer-title">Support</h3>
               {/* <p><i className="fa fa-info"></i><Link to="/">Điều khoản sử dụng</Link></p>
             <p><i className="fa fa-key"></i><Link to="/">Chính sách bảo mật</Link></p>
             <p><i className="fa fa-warning"></i><Link to="/feedback">Feedback</Link></p> */}
+              <p>
+                <i className="fa fa-envelope" /> Email: thuthaocse@gmail.com
+              </p>
+
+              <p>
+                <i className="fa fa-mobile" /> Số điện thoại: 0342788099
+              </p>
             </div>
 
             <div className="column col-lg-2 col-md-4 col-sm-12 col-xs-12 contact">

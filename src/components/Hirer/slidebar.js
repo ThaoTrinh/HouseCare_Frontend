@@ -24,19 +24,19 @@ export default class SlideBar extends React.Component {
             Profile
           </Menu.Item>
         </a>
-        <a href="/user1 / changepassword ">
+        <a href="/user1/changepassword ">
           <Menu.Item index="2">
             <i className="el-icon-menu" />
             Change password
           </Menu.Item>
         </a>
-        <a href="/user1 / schedule ">
+        <a href="/user1/schedule ">
           <Menu.Item index="3">
             <i className="el-icon-time" />
             Schedule
           </Menu.Item>
         </a>
-        <a href="/user1 / recruitment ">
+        <a href="/user1/recruitment ">
           <Menu.Item index="4">
             <i className="el-icon-document" />
             Recruitment
