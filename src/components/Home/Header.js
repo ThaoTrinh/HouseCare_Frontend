@@ -32,7 +32,7 @@ class Header extends React.Component {
 
   render() {
     let userbar;
-    if (this.state.username == "null") {
+    if (this.state.username == "null" || this.state.username == null) {
       userbar = (
         <div>
           <a href="/signin">
@@ -47,7 +47,7 @@ class Header extends React.Component {
       userbar = (
         <div>
           <Ionicon icon="contact" fontSize="35px" />
-          <a href="/user">
+          <a href="/users">
             <Menu.Item index="3">{this.state.username}</Menu.Item>
           </a>
           <a href="/" onClick={this.handleSignout}>
@@ -61,7 +61,7 @@ class Header extends React.Component {
         
         <div>
           <Ionicon icon="contact" fontSize="35px" />
-          <a href="/user1">
+          <a href="/users1">
             <Menu.Item index="3">{this.state.username}</Menu.Item>
           </a>
           <a href="/" onClick={this.handleSignout}>

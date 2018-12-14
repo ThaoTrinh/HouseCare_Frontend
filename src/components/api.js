@@ -114,7 +114,7 @@ var getWork = id => {
 var getuser = id => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
-    users_instance.header['Authorization'] = header;
+    users_instance.defaults.headers.common['Authorization'] = header;
     users_instance
       .get('/' + id)
       .then(response => {
@@ -152,12 +152,14 @@ var chooseWork = (workId) => {
 var createWork = (typeWork, description, time, timespan, location, salary) => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    alert(header);
     job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
       .post('/', {
         typeList: typeWork,
         description: description,
         time: time,
+        timespan: timespan,
         location: location,
         salary: salary
       })

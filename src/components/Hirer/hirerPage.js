@@ -32,22 +32,22 @@ export default class HelperPage extends React.Component {
             <div className="grid-content bg-purple-light">
               <Route
                 exact
-                path="/user1"
+                path="/users1"
                 component={Profile}
                 header={SliderBar}
               />
               <Route
-                path="/user1/changepassword"
+                path="/users1/reset_password"
                 component={ChangePassword}
                 header={SliderBar}
               />
               <Route
-                path="/user1/schedule"
+                path="/users1/schedule"
                 component={Schedule}
                 header={SliderBar}
               />
               <Route
-                path="/user1/recruitment"
+                path="/users1/recruitment"
                 component={Recruitment}
                 header={SliderBar}
               />

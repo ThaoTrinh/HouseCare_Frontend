@@ -10,6 +10,7 @@ import {
 } from 'element-react';
 import 'element-theme-default';
 
+import api from "components/api";
 export default class Profile extends React.Component{
   constructor(props) {
     super(props);
@@ -24,7 +25,8 @@ export default class Profile extends React.Component{
         sex: 'female',
         description: '',
         position: 'helper',
-        experience: 0
+        experience: 0,
+        id: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,7 +38,17 @@ export default class Profile extends React.Component{
     let username = this.state['username'];
     let password = this.state['password'];
     let email = this.state['gmail'];
-  }
+    let id = this.state['id'];
+    
+    api.getuser(id)
+      .then(data => {
+        alert(data);
+      })
+      .catch(err => {
+        alert(err);
+      })
+    }
+  
   handleChange = name => value => {
     this.setState({[name]: value});
   }

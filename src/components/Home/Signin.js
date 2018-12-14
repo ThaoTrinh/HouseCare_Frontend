@@ -37,10 +37,10 @@ export default class SignIn extends React.Component{
         this.setState({signin: true});
         sessionStorage.setItem('username', data.username);
         sessionStorage.setItem('role', data.role);
-        sessionStorage.setItem('jwt', data.jwt);
+        sessionStorage.setItem('jwt', data.token);
         // alert(sessionStorage.getItem('username'));
-        // alert(sessionStorage.getItem('role'));
-
+        alert(sessionStorage.getItem('jwt'));
+        //alert(JSON.stringify(data));
         this.props.history.push('/');
       })
       .catch(err => {

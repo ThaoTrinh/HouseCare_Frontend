@@ -29,8 +29,8 @@ class App extends React.Component {
           <Route exact path="" component={MainSlider} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signin" component={SignIn} header={Header} />
-          <Route path="/user" component={HelperPage} header={Header} />
-          <Route path="/user1" component={HirerPage} header={Header} />
+          <Route path="/users" component={HelperPage} header={Header} />
+          <Route path="/users1" component={HirerPage} header={Header} />
         </div>
         <Footer />
       </div>

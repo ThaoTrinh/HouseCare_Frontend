@@ -46,7 +46,6 @@ export default class Recruitment extends React.Component {
         // work duration, not yet in UI, default to 3hours
         let timespan = this.state.timespan;
         timespan = 3 * 60 * 60 * 1000;
-
         api.createWork(typeWork, description, work_epocktime, timespan, location, salary)
             .then((data) => {
                 alert(data);
