@@ -27,6 +27,7 @@ export default class SignUp extends React.Component{
         description: '',
         position: 'helper',
         experience: 0,
+        err: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,18 +41,33 @@ export default class SignUp extends React.Component{
     let email = this.state['gmail'];
     let role = this.state['position'] === 'helper' ? 0 : 1 ;
 
+  if (username.length < 6 || password.length < 8 || !this.validateEmail(password)){
+    alert("Input is false! Check again!")
+  }
+  
+  else{
     api.signup(username, password, email, name, role)
-      .then(status => {
-        // console.log(status);
-        this.props.history.push('/');
-      })
-      .catch(err => {
-        alert(err);
-      })
+          .then(status => {
+            // console.log(status);
+            this.props.history.push('/');
+          })
+          .catch(err => {
+            // alert("Input is false. Check again!");
+            alert("User name or name or password is empty or exist!");
+          })
+  }
+  
   }
   handleChange = name => value => {
     this.setState({[name]: value});
   }
+
+  validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+  checkUsername =() =>{}
 
 
   render() {
@@ -72,11 +88,13 @@ export default class SignUp extends React.Component{
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">User name</h5>
               <Input className = "col-lg-10" name="username" value={this.state.username} onChange={this.handleChange('username')}></Input>
+              {this.state.username.length < 6 && this.state.username.length > 0 ? <h6 style={{color: "red", marginLeft: 140}}>User name có ít nhất 6 kí tự </h6> : "" }
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Password</h5>
-              <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.password} onChange={this.handleChange('password')}></Input>
+              <Input className = "col-lg-10" style={{width: 485}} type = "password" value={this.state.password} onChange={this.handleChange('password')}></Input><br/>
+              {this.state.password.length < 8 && this.state.password.length > 0 ? <h6 style={{color: "red", marginLeft: 140}}>Password có ít nhất 8 kí tự </h6> : "" }
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
@@ -87,6 +105,7 @@ export default class SignUp extends React.Component{
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Gmail</h5>
               <Input className = "col-lg-10" value={this.state.gmail} onChange={this.handleChange('gmail')}></Input>
+              {this.state.gmail == 0 ? "" : this.validateEmail(this.state.gmail) ? "": <h6 style={{color: "red", marginLeft: 140}}>Vui lòng nhập đúng email </h6>}
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
