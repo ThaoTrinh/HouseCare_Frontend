@@ -34,7 +34,8 @@ export default class ChangePassword extends React.Component{
     let username = this.state['username'];
 
     if(newpassword != newpassword2){
-      alert("Two password is difference. Please enter again!")
+      alert("Two password is different. Please enter again!");
+      return;
     }
 
     api.changepassword(username, password, newpassword)

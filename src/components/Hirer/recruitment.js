@@ -26,7 +26,17 @@ export default class Recruitment extends React.Component {
         date: null,
         worktime: null,
         type: '',
-        desc: ''
+        desc: '',
+
+        salary_options: [
+          {label: "50.000/hour", value: 0},
+          {label: "75.000/hour", value: 1},
+          {label: "100.000/hour", value: 2},
+          {label: "150.000/hour", value: 3},
+          {label: "200.000/hour", value: 4},
+          {label: "250.000/hour", value: 5},
+          {label: "300.000/hour", value: 6},
+        ]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,17 +48,20 @@ export default class Recruitment extends React.Component {
         const date = this.state.date;
         const worktime = this.state.worktime;
         const location = this.state.location;
-        const salary = this.state.salary;
-        const work_epocktime = date + worktime;
+        const salary = this.state.salary_options[this.state.salary].label;
 
+        if (date === null || worktime === null) {
+          return;
+        }
         const time_to_work = date.getTime() + 1000 * (worktime.getHours() * 60 * 60 + worktime.getMinutes() * 60);
 
         // work duration, not yet in UI, default to 3hours
         let timespan = this.state.timespan;
         timespan = 3 * 60 * 60 * 1000;
-        api.createWork(typeWork, description, work_epocktime, timespan, location, salary)
+        api.createWork(typeWork, description, time_to_work, timespan, location, salary)
             .then((data) => {
-                alert(data);
+                // alert(JSON.stringify(data));
+                alert("Add work success");
             })
             .catch((err) => {
                 alert(err);
@@ -70,16 +83,14 @@ export default class Recruitment extends React.Component {
       this.handleChange('address')} style={{marginLeft: 30}}></Input>
         </Form.Item>
         <Form.Item label="Salary" >
-          <Select value={
-      this.state.salary} style={
-      { marginLeft: 30 }} placeholder="Please select salary for helper">
-            <Select.Option label="50.000/hour" value="1"></Select.Option>
-            <Select.Option label="75.000/hour" value="2"></Select.Option>
-            <Select.Option label="100.000/hour" value="3"></Select.Option>
-            <Select.Option label="150.000/hour" value="4"></Select.Option>
-            <Select.Option label="200.000/hour" value="5"></Select.Option>
-            <Select.Option label="250.000/hour" value="6"></Select.Option>
-            <Select.Option label="300.000/hour" value="7"></Select.Option>
+          <Select onChange={this.handleChange('salary')} value={this.state.salary}
+          style={
+            { marginLeft: 30 }} placeholder="Please select salary for helper">
+            {
+              this.state.salary_options.map(el => {
+                return <Select.Option label={el.label} value={el.value} />
+              })
+            }
           </Select>
         </Form.Item>
         <Form.Item label="Date">

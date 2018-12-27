@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'element-react';
 
-import getjob from 'components/api';
+import api from 'components/api';
 
 export default class Schedule extends React.Component {
   constructor(props) {
@@ -16,20 +16,26 @@ export default class Schedule extends React.Component {
           sortable: true,
         },
         {
-          label: 'Date',
-          prop: 'date',
+          label: 'Duration',
+          prop: 'timespan',
           width: 180,
           sortable: true,
         },
         {
-          label: 'Hour',
-          prop: 'hour',
+          label: 'Salary',
+          prop: 'salary',
           width: 120,
           sortable: true,
         },
         {
-          label: 'Name',
-          prop: 'name',
+          label: 'Owner',
+          prop: 'owner',
+          width: 150,
+          sortable: true,
+        },
+        {
+          label: 'Helper',
+          prop: 'helper',
           width: 150,
           sortable: true,
         },
@@ -50,74 +56,38 @@ export default class Schedule extends React.Component {
         },
       ],
       data: [
-        {
-          time: 'Monday',
-          date: '2016-05-03',
-          hour: '15h',
-          name: 'Thao',
-          address: '12 Vo Van Ngan, Thu Duc',
-          type: 'Don dep nha cua',
-          status: 'Complete',
-        },
-        {
-          time: 'Monday',
-          date: '2016-05-03',
-          hour: '12h',
-          name: 'Khoa',
-          address: '14 Vo Van Tri, Go Vap',
-          type: 'Cham soc tre em',
-          status: 'Complete',
-        },
-        {
-          time: 'Monday',
-          date: '2016-05-03',
-          hour: '8h',
-          name: 'Khoi',
-          address: '12 Duong so 2, Thu Duc',
-          type: 'Cham soc nguoi gia',
-          status: 'Complete',
-        },
-        {
-          time: 'Tuesday',
-          date: '2016-05-04',
-          hour: '15h',
-          name: 'Thinh',
-          address: 'Phan Van Tri, Thu Duc',
-          type: 'Don dep nha cua',
-          status: 'Incomplete',
-        },
-        {
-          time: 'Tuesday',
-          date: '2016-05-03',
-          hour: '15h',
-          name: 'Thao',
-          address: '12 Vo Van Ngan, Thu Duc',
-          type: 'Don dep nha cua',
-          status: 'Complete',
-        },
-
-        {
-          time: 'Monday',
-          date: '2016-05-03',
-          hour: '15h',
-          name: 'Thao',
-          address: '12 Vo Van Ngan, Thu Duc',
-          type: 'Don dep nha cua',
-          status: 'Complete',
-        },
       ],
     };
   }
 
-  // componentDidMount() {
-  //   getjob()
-  //     .then(data => {
-  //       this.setState({ data: data });
-  //     })
-  //     .catch(() => {
-  //       alert('cannot fetch job data');
-  //     });
-  // }
+  componentDidMount() {
+    api.getWorkList()
+      .then(data => {
+        // process data
+        alert(JSON.stringify(data));
+        let view = []
+        data.map(
+          (d) => {
+            view.push({
+              time: d.time,
+              timespan: d.timespan,
+              owner: d.owner.username,
+              helper: d.helper ? d.helper.username : "Not Assigned",
+              status: d.status == 0 ? "Due" : "Done",
+              type: d.type,
+              address: d.location,
+              salary: d.expectedSalary,
+            })
+          }
+        )
+        // end process data
+        this.setState({data: view});
+      })
+      .catch((err) => {
+        alert(err);
+        // alert('cannot fetch job data');
+      });
+  }
 
   render() {
     return (

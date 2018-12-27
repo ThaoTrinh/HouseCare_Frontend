@@ -57,6 +57,8 @@ var signin = (username, password) => {
 
 var changepassword = (username, password, new_password) => {
   return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    users_instance.defaults.headers.common['Authorization'] = header;
     users_instance
       .post('/reset_password', {
         username: username,
@@ -78,7 +80,7 @@ var changepassword = (username, password, new_password) => {
 var getlistjob = () => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
-    job_instance.defaults.headers.common['Authorizationn'] = header;
+    job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
       .get('/')
       .then(response => {
@@ -99,6 +101,25 @@ var getWork = id => {
     job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
       .get('/' + id)
+      .then(response => {
+        if (response['data']['success'] != true) {
+          return reject(response['data']['message']);
+        }
+        return resolve(response['data']['data']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
+
+var getWorkList = () => {
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    job_instance.defaults.headers.common['Authorization'] = header;
+    job_instance
+      .get('/')
       .then(response => {
         if (response['data']['success'] != true) {
           return reject(response['data']['message']);
@@ -152,11 +173,10 @@ var chooseWork = (workId) => {
 var createWork = (typeWork, description, time, timespan, location, salary) => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
-    alert(header);
     job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
       .post('/', {
-        typeList: typeWork,
+        type: typeWork,
         description: description,
         time: time,
         timespan: timespan,
@@ -181,6 +201,7 @@ module.exports = {
   getuser,
   changepassword,
   getWork,
+  getWorkList,
   getlistjob,
   chooseWork,
   createWork,
