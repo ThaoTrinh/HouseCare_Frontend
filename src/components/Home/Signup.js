@@ -40,20 +40,23 @@ export default class SignUp extends React.Component{
     let password = this.state['password'];
     let email = this.state['gmail'];
     let role = this.state['position'] === 'helper' ? 0 : 1 ;
+    let address = this.state['address'];
 
-  if (username.length < 6 || password.length < 8 || !this.validateEmail(password)){
+  if (username.length < 6 || password.length < 8 || !this.validateEmail(email)){
     alert("Input is false! Check again!")
   }
   
   else{
-    api.signup(username, password, email, name, role)
+    api.signup(username, password, email, name, role, address)
           .then(status => {
             // console.log(status);
-            this.props.history.push('/');
+            // this.props.history.push('/');
+            this.props.history.replace('/');
+            this.forceUpdate();
           })
           .catch(err => {
             // alert("Input is false. Check again!");
-            alert("User name or name or password is empty or exist!");
+            alert(err);
           })
   }
   
@@ -147,7 +150,7 @@ export default class SignUp extends React.Component{
               <h5 className = "col-lg-2">Description</h5>
               <Input className = "col-lg-10" type="textarea" style={{width: 500, marginTop: 40}} value={this.state.description} onChange={this.handleChange('description')}></Input>
               </Form.Item>
-
+  
             <Form.Item style={{marginTop: 30}}>
               <Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Sign up</Button>
               <Button style={{marginLeft: 140}}>Cancel</Button>

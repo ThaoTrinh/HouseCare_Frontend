@@ -5,6 +5,7 @@ import 'element-theme-default';
 
 import SliderBar from 'components/Hirer/slidebar';
 import Recruitment from 'components/Hirer/recruitment';
+import ChooseHelper from 'components/Hirer/chooseHelper';
 
 import Profile from 'components/profile';
 import ChangePassword from 'components/changePassword';
@@ -49,6 +50,12 @@ export default class HelperPage extends React.Component {
               <Route
                 path="/users1/recruitment"
                 component={Recruitment}
+                header={SliderBar}
+              />
+
+              <Route
+                path="/users1/chooseHelper"
+                component={ChooseHelper}
                 header={SliderBar}
               />
             </div>

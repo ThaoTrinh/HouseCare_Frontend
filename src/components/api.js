@@ -14,7 +14,7 @@ const users_instance = axios.create({
   baseURL: API_URL + '/users',
 });
 
-var signup = (username, password, email, name, role) => {
+var signup = (username, password, email, name, role, address) => {
   return new Promise((resolve, reject) => {
     users_instance
       .post('/signup', {
@@ -23,6 +23,7 @@ var signup = (username, password, email, name, role) => {
         email: email,
         name: name,
         role: role,
+        address: address,
       })
       .then(response => {
         if (response['data']['success'] != true) {
@@ -155,9 +156,7 @@ var chooseWork = (workId) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
     job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
-      .put('/' + workId,{
-        workId: workId
-      })
+      .put('/' + workId)
       .then(response => {
         if (response['data']['success'] != true) {
           return reject(response['data']['message']);

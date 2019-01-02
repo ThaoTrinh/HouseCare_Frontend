@@ -61,7 +61,9 @@ export default class Recruitment extends React.Component {
         api.createWork(typeWork, description, time_to_work, timespan, location, salary)
             .then((data) => {
                 // alert(JSON.stringify(data));
-                alert("Add work success");
+                // alert("Add work success");
+                this.props.history.push("/users1/recruitment/chooseHelper");
+                
             })
             .catch((err) => {
                 alert(err);

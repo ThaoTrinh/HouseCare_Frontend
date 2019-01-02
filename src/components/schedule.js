@@ -64,24 +64,31 @@ export default class Schedule extends React.Component {
     api.getWorkList()
       .then(data => {
         // process data
-        alert(JSON.stringify(data));
-        let view = []
+        // alert(JSON.stringify(data));
         data.map(
           (d) => {
-            view.push({
-              time: d.time,
-              timespan: d.timespan,
-              owner: d.owner.username,
-              helper: d.helper ? d.helper.username : "Not Assigned",
-              status: d.status == 0 ? "Due" : "Done",
-              type: d.type,
-              address: d.location,
-              salary: d.expectedSalary,
-            })
+            // view.push({
+            //   time: d.time,
+            //   timespan: d.timespan,
+            //   owner: d.owner.username,
+            //   helper: d.helper ? d.helper.username : "Not Assigned",
+            //   status: d.status == 0 ? "Due" : "Done",
+            //   type: d.type,
+            //   address: d.location,
+            //   salary: d.expectedSalary,
+            // })
+            d.time = new Date(Date.parse(d.time));
+            d.time = d.time.toLocaleString();
+            d.timespan = (d.timespan / (1000 * 60 * 60)) + " hours";
+            d.owner = d.owner.username;
+            d.helper = d.helper ? d.helper.username : "Not Assigned";
+            d.status = d.status == 0 ? "Due" : "Done";
+            d.address = d.location;
+            d.salary = d.expectedSalary;
           }
         )
         // end process data
-        this.setState({data: view});
+        this.setState({data});
       })
       .catch((err) => {
         alert(err);

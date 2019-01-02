@@ -42,7 +42,11 @@ export default class SignIn extends React.Component{
         // alert(sessionStorage.getItem('username'));
         //alert(sessionStorage.getItem('id'));
         //alert(JSON.stringify(data));
-        this.props.history.push('/');
+        // this.props.history.push('/', {
+        //   isSignin: true
+        // });
+
+        this.props.history.go(-1);
       })
       .catch(err => {
         alert(err);

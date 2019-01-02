@@ -4,7 +4,7 @@ import { Layout } from 'element-react';
 import 'element-theme-default';
 
 import Navigation from 'components/Helper/navigation';
-import NewWork from 'components/Helper/newWork';
+import JobPosting from 'components/Helper/jobPosting';
 
 import Profile from 'components/profile';
 import Schedule from 'components/schedule';
@@ -48,7 +48,7 @@ export default class HelperPage extends React.Component {
               />
               <Route
                 path="/users/notification"
-                component={NewWork}
+                component={JobPosting}
                 header={Navigation}
               />
             </div>
