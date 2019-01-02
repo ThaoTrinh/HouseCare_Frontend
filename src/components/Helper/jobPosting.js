@@ -1,8 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'element-react';
-import api from "components/api";
+import api from 'components/api';
 export default class JobPosting extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -38,32 +37,27 @@ export default class JobPosting extends React.Component {
     };
   }
 
-  componentDidMount(){
-    let id = sessionStorage.getItem('id');
-    api.getworklist(id)
+  componentDidMount() {
+    api
+      .getWorkList()
       .then(data => {
-        data.filter((d) =>
-          d.worker == null
-        )
+        data.filter(d => d.worker == null);
 
-        data.map(
-          (d) => {
-            d.time = new Date(Date.parse(d.time));
-            d.time = d.time.toLocaleString();
-            d.timespan = (d.timespan / (1000 * 60 * 60)) + " hours";
-            d.owner= d.owner.username;
-            d.address= d.location;
-            d.salary= d.expectedSalary;
-            d.type= d.type;
-          } 
-        )
-        this.setState({data});
+        data.map(d => {
+          d.time = new Date(Date.parse(d.time));
+          d.time = d.time.toLocaleString();
+          d.timespan = d.timespan / (1000 * 60 * 60) + ' hours';
+          d.owner = d.owner.username;
+          d.address = d.location;
+          d.salary = d.expectedSalary;
+        });
+        this.setState({ data });
         // alert(JSON.stringify(data));
       })
       .catch(err => {
         alert(err);
-      })
-    }
+      });
+  }
 
   accept(index) {
     // khi 1 người nhấn vào nút accept thì trường dữ liệu đó sẽ bị xóa
@@ -73,19 +67,18 @@ export default class JobPosting extends React.Component {
 
     // cap nhat lai helper cho cong viec
     const { data } = this.state;
-    api.chooseWork()
+    api
+      .chooseWork()
       .then(data => {})
       .catch(err => {
         alert(err);
-      })
+      });
 
     // xoa hang duoc chon do
     data.splice(index, 1);
     this.setState({
       data: [...data],
     });
-
-
   }
 
   render() {

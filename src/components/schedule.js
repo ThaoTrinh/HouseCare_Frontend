@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'element-react';
+import * as moment from 'moment';
 
 import api from 'components/api';
 
@@ -55,42 +56,29 @@ export default class Schedule extends React.Component {
           prop: 'status',
         },
       ],
-      data: [
-      ],
+      data: [],
     };
   }
 
   componentDidMount() {
-    api.getWorkList()
+    api
+      .getWorkList()
       .then(data => {
         // process data
         // alert(JSON.stringify(data));
-        data.map(
-          (d) => {
-            // view.push({
-            //   time: d.time,
-            //   timespan: d.timespan,
-            //   owner: d.owner.username,
-            //   helper: d.helper ? d.helper.username : "Not Assigned",
-            //   status: d.status == 0 ? "Due" : "Done",
-            //   type: d.type,
-            //   address: d.location,
-            //   salary: d.expectedSalary,
-            // })
-            d.time = new Date(Date.parse(d.time));
-            d.time = d.time.toLocaleString();
-            d.timespan = (d.timespan / (1000 * 60 * 60)) + " hours";
-            d.owner = d.owner.username;
-            d.helper = d.helper ? d.helper.username : "Not Assigned";
-            d.status = d.status == 0 ? "Due" : "Done";
-            d.address = d.location;
-            d.salary = d.expectedSalary;
-          }
-        )
-        // end process data
-        this.setState({data});
+        data.map(d => {
+          d.time = new Date(Date.parse(d.time));
+          d.time = d.time.toLocaleString();
+          d.timespan = moment.duration(d.timespan).asHours();
+          d.owner = d.owner.username;
+          d.helper = d.helper ? d.helper.username : 'Not Assigned';
+          d.status = d.status == 0 ? 'Due' : 'Done';
+          d.address = d.location;
+          d.salary = d.expectedSalary;
+        });
+        this.setState({ data });
       })
-      .catch((err) => {
+      .catch(err => {
         alert(err);
         // alert('cannot fetch job data');
       });
