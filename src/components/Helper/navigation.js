@@ -39,7 +39,8 @@ export default class Navigation extends React.Component {
         <a href="/users/notification ">
           <Menu.Item index="4">
             <i className="el-icon-message" />
-            Notification ({this.state.number})
+            {/* Notification ({this.state.number}) */}
+            Notification
           </Menu.Item>
         </a>
       </Menu>

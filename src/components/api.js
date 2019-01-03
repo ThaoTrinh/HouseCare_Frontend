@@ -115,7 +115,7 @@ var getWork = id => {
 };
 
 
-var getWorkList = () => {
+var getWorkListOfUser = () => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
     job_instance.defaults.headers.common['Authorization'] = header;
@@ -132,6 +132,26 @@ var getWorkList = () => {
       });
   });
 };
+
+
+var getWorkList = () => {
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    job_instance.defaults.headers.common['Authorization'] = header;
+    job_instance
+      .get('/pending')
+      .then(response => {
+        if (response['data']['success'] != true) {
+          return reject(response['data']['message']);
+        }
+        return resolve(response['data']['data']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
 
 var getuser = id => {
   return new Promise((resolve, reject) => {
@@ -200,6 +220,7 @@ module.exports = {
   getuser,
   changepassword,
   getWork,
+  getWorkListOfUser,
   getWorkList,
   getlistjob,
   chooseWork,

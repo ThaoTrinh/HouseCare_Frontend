@@ -67,10 +67,17 @@ export default class JobPosting extends React.Component {
 
     // cap nhat lai helper cho cong viec
     const { data } = this.state;
+    let workId = data[index]._id;
+
     api
-      .chooseWork()
-      .then(data => {})
+      .chooseWork(workId)
+      .then(data => {
+        //alert(JSON.stringify(data));
+
+        alert("Choose Success");
+      })
       .catch(err => {
+        //alert(JSON.stringify(data));
         alert(err);
       });
 
