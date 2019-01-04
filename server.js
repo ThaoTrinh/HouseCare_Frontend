@@ -8,6 +8,6 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(3002, () => {
+app.listen(3000, () => {
   console.log('App is running at port 3002');
 });

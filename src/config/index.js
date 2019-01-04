@@ -1,6 +1,9 @@
-'use strict';
+let development = {
+  API_URL: 'http://localhost:5000/api/v1',
+};
 
-// Settings configured here will be merged into the final config object.
-export default {
-  api: 'http://localhost:4008'
-}
+let production = {
+  API_URL: '',
+};
+
+export { development, production };
