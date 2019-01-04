@@ -8,7 +8,6 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      //showPopup: false,
       username: null,
       role: null,
     };
@@ -70,8 +69,6 @@ class Header extends React.Component {
         </div>
       );
     }
-
-    // console.log(this.props.signin);
 
     return (
       <div>

@@ -52,8 +52,6 @@ export default class SignUp extends React.Component {
       api
         .signup(username, password, email, name, role, address)
         .then(status => {
-          // console.log(status);
-          // this.props.history.push('/');
           this.props.history.replace('/');
           this.forceUpdate();
         })

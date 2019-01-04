@@ -4,9 +4,7 @@ import {
   Layout,
   Form,
   Input,
-  Radio,
   DatePicker,
-  Slider,
   Select,
   TimePicker,
   Checkbox
@@ -47,7 +45,7 @@ export default class Recruitment extends React.Component {
         const description = this.state.desc;
         const date = this.state.date;
         const worktime = this.state.worktime;
-        const location = this.state.location;
+        const location = this.state.address;
         const salary = this.state.salary_options[this.state.salary].label;
 
         if (date === null || worktime === null) {
@@ -62,8 +60,6 @@ export default class Recruitment extends React.Component {
             .then((data) => {
                 // alert(JSON.stringify(data));
                 alert("Add work success");
-                // this.props.history.push("/users1/recruitment/chooseHelper");
-                
             })
             .catch((err) => {
                 alert(err);

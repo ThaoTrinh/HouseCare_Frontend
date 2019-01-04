@@ -39,13 +39,6 @@ export default class SignIn extends React.Component{
         sessionStorage.setItem('role', data.role);
         sessionStorage.setItem('jwt', data.token);
         sessionStorage.setItem('id', data.id);
-        // alert(sessionStorage.getItem('username'));
-        //alert(sessionStorage.getItem('id'));
-        //alert(JSON.stringify(data));
-        // this.props.history.push('/', {
-        //   isSignin: true
-        // });
-
         this.props.history.go(-1);
       })
       .catch(err => {
@@ -56,15 +49,6 @@ export default class SignIn extends React.Component{
   handleChange = name => value => {
     this.setState({[name]: value});
   }
-
-  /* handleChangeUsername(e){
-    this.setState({username: e});
-  }
-
-  handleChangePassword(e){
-    this.setState({password: e});
-  } */
-
 
   render() {
     return (

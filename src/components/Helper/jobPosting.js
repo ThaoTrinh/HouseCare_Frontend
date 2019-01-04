@@ -72,8 +72,6 @@ export default class JobPosting extends React.Component {
     api
       .chooseWork(workId)
       .then(data => {
-        //alert(JSON.stringify(data));
-
         alert("Choose Success");
       })
       .catch(err => {

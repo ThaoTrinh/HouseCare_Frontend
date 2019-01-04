@@ -32,9 +32,6 @@ class Footer extends React.Component {
               style={{ left: '-100px' }}
             >
               <h3 className="footer-title">Support</h3>
-              {/* <p><i className="fa fa-info"></i><Link to="/">Điều khoản sử dụng</Link></p>
-            <p><i className="fa fa-key"></i><Link to="/">Chính sách bảo mật</Link></p>
-            <p><i className="fa fa-warning"></i><Link to="/feedback">Feedback</Link></p> */}
               <p>
                 <i className="fa fa-envelope" /> Email: thuthaocse@gmail.com
               </p>

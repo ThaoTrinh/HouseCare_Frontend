@@ -64,9 +64,6 @@ export default class Schedule extends React.Component {
     api
       .getWorkListOfUser()
       .then(data => {
-        
-        // process data
-        //alert(JSON.stringify(data));
         data.map(d => {
           d.time = new Date(Date.parse(d.time));
           d.time = d.time.toLocaleString();
@@ -81,7 +78,6 @@ export default class Schedule extends React.Component {
       })
       .catch(err => {
         alert(err);
-        // alert('cannot fetch job data');
       });
   }
 
