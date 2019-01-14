@@ -11,6 +11,7 @@ import {
 import 'element-theme-default';
 
 import api from "components/api";
+import { stringify } from 'querystring';
 export default class Profile extends React.Component{
   constructor(props) {
     super(props);
@@ -26,7 +27,8 @@ export default class Profile extends React.Component{
         description: '',
         position: 'helper',
         experience: 0,
-        id: ''
+        id: '',
+        walletAddress: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -52,14 +54,47 @@ export default class Profile extends React.Component{
     }
 
   componentDidMount(){
+    const {drizzle, drizzleState} = this.props;
     let id = sessionStorage.getItem('id');
+    let walletAddress = '';
     api.getuser(id)
       .then(data => {
+        alert(JSON.stringify(data));
+        // Kiem tra xem neu data khong co wallet address thi
+        if (data.walletAddress == null){
+          //dung drizzle lay thong tin cua account neu co thi xac nhan de them thay doi thong tin wallet address
+          // Neu khong co hien thi thong bao de dang ki tren meta mask
+          if (!drizzleState.accounts){
+            alert("Don't have a wallet address! Please sign up in meta mask");
+          }
+          else{
+            walletAddress = drizzleState.accounts[0];
+            alert("Wallet address is got automatic from your computer!", walletAddress);
+            api.addWalletAddress(id, walletAddress)
+              .then(data => {
+                alert("Add wallet success");
+              })
+              .catch(err => {
+                alert(err);
+              })
+          }
+        }
+
+        else{
+          walletAddress = data.walletAddress;
+        }
+        //set trang thai cho user
         this.setState({
           name: data.name,
           username: data.username,
           position: data.role == 0 ? 'helper' : 'hirer',
-          gmail: data.email
+          gmail: data.email,
+          address: data.address,
+          walletAddress: walletAddress,
+          experience: data.experience,
+          description: data.description,
+          sex: data.sex
+
         });
         
         // alert(JSON.stringify(data));
@@ -96,10 +131,10 @@ export default class Profile extends React.Component{
               <Input className = "col-lg-10" name="username" value={this.state.username} onChange={this.handleChange('username')}></Input>
             </Form.Item>
 
-            {/* <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-2">Password</h5>
-              <Input className = "col-lg-10" style={{width: 565}} type = "password" value={this.state.password} onChange={this.handleChange('password')}></Input>
-            </Form.Item> */}
+            <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
+              <h5 className = "col-lg-2">Wallet Address</h5>
+              <Input className = "col-lg-10" style={{width: 565}} value={this.state.walletAddress} onChange={this.handleChange('password')}></Input>
+            </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Name</h5>
@@ -111,12 +146,12 @@ export default class Profile extends React.Component{
               <Input className = "col-lg-10" value={this.state.gmail} onChange={this.handleChange('gmail')}></Input>
             </Form.Item>
 
-            {/* <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
+            <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
               <h5 className = "col-lg-2">Address</h5>
               <Input className = "col-lg-10" value={this.state.address} onChange={this.handleChange('address')}></Input>
-            </Form.Item> */}
+            </Form.Item>
 
-                {/* <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
+                <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
                   <h5 className = "col-lg-4" style={{marginRight: "-137px"}}>Date of birth</h5>
                   <Form.Item prop="date1" labelWidth="0px" className = "col-lg-8">
                     <DatePicker
@@ -125,20 +160,20 @@ export default class Profile extends React.Component{
                     onChange={this.handleChange('date')}
                     />
                   </Form.Item>
-                </Form.Item> */}
+                </Form.Item>
 
-              {/* <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
+              <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
                 <h5 className = "col-lg-3">Experience</h5>
                 <div style = {{marginLeft: 140, width: "450px"}}>
                   <Slider value={this.state.experience} onChange={this.handleChange('experience')}/>
                 </div>
-            </Form.Item> */}
+            </Form.Item>
 
-              {/* <Form.Item style={{marginLeft: "-160px"}}>
+              <Form.Item style={{marginLeft: "-160px"}}>
                 <h5 className = "col-lg-2" style={{marginRight: 15}}>Sex</h5>
                 <Radio value="female" checked={this.state.sex === 'female'} onChange={this.handleChange('sex')}>Female</Radio>
                 <Radio value="male" checked={this.state.sex === 'male'} onChange={this.handleChange('sex')}>Male</Radio>
-            </Form.Item> */}
+            </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px"}}>
               <h5 className = "col-lg-2" style={{marginRight: 15}}>Position</h5>

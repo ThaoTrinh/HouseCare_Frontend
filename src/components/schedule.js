@@ -1,14 +1,18 @@
 import React from 'react';
-import { Table } from 'element-react';
+import { Table , Button} from 'element-react';
 import * as moment from 'moment';
 
+import Web3 from 'web3';
+
 import api from 'components/api';
+import Work from "../contracts/Work.json";
 
 export default class Schedule extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      drizzleState:null,
       columns: [
         {
           label: 'Time',
@@ -19,31 +23,31 @@ export default class Schedule extends React.Component {
         {
           label: 'Duration',
           prop: 'timespan',
-          width: 180,
+          width: 100,
           sortable: true,
         },
         {
           label: 'Salary',
           prop: 'salary',
-          width: 120,
+          width: 100,
           sortable: true,
         },
         {
           label: 'Owner',
           prop: 'owner',
-          width: 150,
+          width: 130,
           sortable: true,
         },
         {
           label: 'Helper',
           prop: 'helper',
-          width: 150,
+          width: 130,
           sortable: true,
         },
         {
           label: 'Address',
           prop: 'address',
-          width: 180,
+          width: 150,
         },
         {
           label: 'Type',
@@ -55,10 +59,51 @@ export default class Schedule extends React.Component {
           label: 'Status',
           prop: 'status',
         },
+
+        {
+          label: 'Operations',
+          width: 120,
+          fixed: 'right',
+          render: (row, column, index) => {
+            return (
+              <span>
+                <Button
+                  type="text"
+                  size="small"
+                  onClick={this.createContract.bind(this, index)}
+                >
+                  Create contract
+                </Button>
+              </span>
+            );
+          },
+        },
       ],
       data: [],
     };
   }
+
+  createContract() {
+    const {drizzle, drizzleState} = this.props;
+
+    var web3 = new Web3(drizzle.web3.currentProvider);
+    var myContract = new web3.eth.Contract(Work.abi);
+    console.log(web3);
+    console.log(myContract);
+    myContract.deploy({
+      data: Work.bytecode,
+      arguments: []
+    })
+    .send({
+      from: drizzleState.accounts[0],
+      gas: 1500000,
+      gasPrice: '10000000000'
+    })
+    .then(function(newContractInstance) {
+      console.log(newContractInstance.options.address)
+    });
+  }
+
 
   componentDidMount() {
     api

@@ -15,13 +15,15 @@ require('styles/App.css');
 export default class HelperPage extends React.Component {
   constructor() {
     super();
-    this.state = { showPopup: false };
+    this.state = { showPopup: false , drizzleState: null};
   }
   togglePopup() {
     this.setState({ showPopup: !this.state.showPopup });
   }
 
   render() {
+    const {drizzle, drizzleState} = this.props;
+
     return (
       <div>
         <Layout.Row className="tac">
@@ -41,11 +43,22 @@ export default class HelperPage extends React.Component {
                 component={ChangePassword}
                 header={Navigation}
               />
-              <Route
+              {/* <Route
                 path="/users/schedule"
                 component={Schedule}
                 header={Navigation}
+              /> */}
+
+              <Route
+                path ="/users/schedule"
+                render = {(props) =>
+                <Schedule {...props}
+                header={Navigation}
+                drizzleState={drizzleState}
+                drizzle = {drizzle}
+                />}
               />
+
               <Route
                 path="/users/notification"
                 component={JobPosting}

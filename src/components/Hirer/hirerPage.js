@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Layout } from 'element-react';
 import 'element-theme-default';
 
@@ -14,8 +14,8 @@ import Schedule from 'components/schedule';
 require('styles/App.css');
 
 export default class HelperPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { showPopup: false };
   }
   togglePopup() {
@@ -23,6 +23,7 @@ export default class HelperPage extends React.Component {
   }
 
   render() {
+    const {drizzle, drizzleState} = this.props;
     return (
       <div>
         <Layout.Row className="tac">
@@ -31,33 +32,46 @@ export default class HelperPage extends React.Component {
           </Layout.Col>
           <Layout.Col span={20}>
             <div className="grid-content bg-purple-light">
-              <Route
-                exact
-                path="/users1"
-                component={Profile}
-                header={SliderBar}
-              />
-              <Route
-                path="/users1/reset_password"
-                component={ChangePassword}
-                header={SliderBar}
-              />
-              <Route
-                path="/users1/schedule"
-                component={Schedule}
-                header={SliderBar}
-              />
-              <Route
-                path="/users1/recruitment"
-                component={Recruitment}
-                header={SliderBar}
-              />
+            <Switch>
+              <Route exact
+                  path ="/users1"
+                  render = {(props) =>
+                  <Profile {...props}
+                  header={SliderBar}
+                  drizzleState={drizzleState}
+                  drizzle = {drizzle}
+                  />}
+                />
+                <Route
+                  path="/users1/reset_password"
+                  component={ChangePassword}
+                  header={SliderBar}
+                />
+                <Route
+                  path ="/users1/schedule"
+                  render = {(props) =>
+                  <Schedule {...props}
+                  header={SliderBar}
+                  drizzleState={drizzleState}
+                  drizzle = {drizzle}
+                  />}
+                />
+                <Route
+                  path ="/users1/recruitment"
+                  render = {(props) =>
+                  <Recruitment {...props}
+                  header={SliderBar}
+                  drizzleState={drizzleState}
+                  drizzle = {drizzle}
+                  />}
+                />
 
-              <Route
-                path="/users1/chooseHelper"
-                component={ChooseHelper}
-                header={SliderBar}
-              />
+                <Route
+                  path="/users1/chooseHelper"
+                  component={ChooseHelper}
+                  header={SliderBar}
+                />
+              </Switch>
             </div>
           </Layout.Col>
         </Layout.Row>

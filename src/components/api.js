@@ -214,6 +214,27 @@ var createWork = (typeWork, description, time, timespan, location, salary) => {
   });
 };
 
+var addWalletAddress = (userId, walletAddress) => {
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    users_instance.defaults.headers.common['Authorization'] = header;
+    users_instance
+      .post('/walletAddress', {
+
+        walletAddress: walletAddress
+      })
+      .then(response => {
+        if (response['data']['success'] != true) {
+          return reject(response['data']['message']);
+        }
+        return resolve(response['data']['data']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
 module.exports = {
   signup,
   signin,
@@ -225,4 +246,5 @@ module.exports = {
   getlistjob,
   chooseWork,
   createWork,
+  addWalletAddress,
 };

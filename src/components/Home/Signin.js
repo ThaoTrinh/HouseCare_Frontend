@@ -16,7 +16,9 @@ export default class SignIn extends React.Component{
     this.state = {
         username: '',
         password: '',
-        signin: false
+        signin: false,
+        loading: true,
+        drizzleState: null, 
     };
 
     // this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -40,6 +42,7 @@ export default class SignIn extends React.Component{
         sessionStorage.setItem('jwt', data.token);
         sessionStorage.setItem('id', data.id);
         this.props.history.go(-1);
+
       })
       .catch(err => {
         alert(err);
@@ -48,6 +51,14 @@ export default class SignIn extends React.Component{
 
   handleChange = name => value => {
     this.setState({[name]: value});
+  }
+
+  componentDidMount(){
+    
+  }
+
+  componentWillUnMount(){
+    this.unsubscribe();
   }
 
   render() {

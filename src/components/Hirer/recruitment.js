@@ -7,7 +7,8 @@ import {
   DatePicker,
   Select,
   TimePicker,
-  Checkbox
+  Checkbox,
+  Alert
 } from 'element-react';
 import 'element-theme-default';
 import * as api from 'components/api';
@@ -59,7 +60,8 @@ export default class Recruitment extends React.Component {
         api.createWork(typeWork, description, time_to_work, timespan, location, salary)
             .then((data) => {
                 // alert(JSON.stringify(data));
-                alert("Add work success");
+              alert("Add work success");
+              //  <Alert title="Success" type="success" description="Wait minutes!" showIcon={true} />
             })
             .catch((err) => {
                 alert(err);
