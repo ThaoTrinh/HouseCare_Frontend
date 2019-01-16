@@ -42,13 +42,14 @@ export default class Recruitment extends React.Component {
   }
 
     onSubmit(e) {
+        let id = sessionStorage.getItem('id');
+       
         const typeWork = this.state.type;
         const description = this.state.desc;
         const date = this.state.date;
         const worktime = this.state.worktime;
         const location = this.state.address;
         const salary = this.state.salary_options[this.state.salary].label;
-
         if (date === null || worktime === null) {
           return;
         }
@@ -57,7 +58,7 @@ export default class Recruitment extends React.Component {
         // work duration, not yet in UI, default to 3hours
         let timespan = this.state.timespan;
         timespan = 3 * 60 * 60 * 1000;
-        api.createWork(typeWork, description, time_to_work, timespan, location, salary)
+        api.createWork(id, typeWork, time_to_work, timespan,salary, location, description)
             .then((data) => {
                 // alert(JSON.stringify(data));
               alert("Add work success");
@@ -108,7 +109,7 @@ export default class Recruitment extends React.Component {
             <Form.Item prop="time" labelWidth="0px">
               <TimePicker
                 value={this.state.worktime}
-                selectableRange="18:30:00 - 20:30:00"
+                selectableRange="00:00:00 - 23:59:59"
                 placeholder="Pick a time"
                 onChange={this.handleChange('worktime')}
               />

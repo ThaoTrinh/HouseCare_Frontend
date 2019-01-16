@@ -62,9 +62,13 @@ export default class Schedule extends React.Component {
 
         {
           label: 'Operations',
+          prop: 'contract',
           width: 120,
           fixed: 'right',
           render: (row, column, index) => {
+            if (this.state.data[index].contract) {
+              return <p>{this.state.data[index].contract}</p>;
+            }
             return (
               <span>
                 <Button
@@ -83,32 +87,53 @@ export default class Schedule extends React.Component {
     };
   }
 
-  createContract() {
-    const {drizzle, drizzleState} = this.props;
+  createContract(index) {
+    if (this.state.helper == 'Not Assigned'){
+      alert("Can not create contract!")
+    }
+    else{
+      let id = sessionStorage.getItem('id');
+      const {drizzle, drizzleState} = this.props;
 
-    var web3 = new Web3(drizzle.web3.currentProvider);
-    var myContract = new web3.eth.Contract(Work.abi);
-    console.log(web3);
-    console.log(myContract);
-    myContract.deploy({
-      data: Work.bytecode,
-      arguments: []
-    })
-    .send({
-      from: drizzleState.accounts[0],
-      gas: 1500000,
-      gasPrice: '10000000000'
-    })
-    .then(function(newContractInstance) {
-      console.log(newContractInstance.options.address)
-    });
+      var web3 = new Web3(drizzle.web3.currentProvider);
+      var myContract = new web3.eth.Contract(Work.abi);
+
+      myContract.deploy({
+        data: Work.bytecode,
+        arguments: []
+      })
+      .send({
+        from: drizzleState.accounts[0],
+        gas: 1500000,
+        gasPrice: '10000000000'
+      })
+      .then((newContractInstance) => {
+        this.state.data[index].contract = newContractInstance.options.address;
+        this.forceUpdate();
+        return api
+          .addContractAddress(this.state.data[index]._id,this.state.data[index].contract);
+      })
+      .catch(err => {
+        alert(err);
+      })
+      .then(data => {
+        alert("Create contract success");
+      })
+      .catch(err => {
+        alert(err);
+      })
+      }
+
+      // myContract.setData(this.state.data[index].owner.walletAddress,
+      //   this.state.data[index].owner.walletAddress)
+    
   }
-
 
   componentDidMount() {
     api
       .getWorkListOfUser()
       .then(data => {
+        alert(JSON.stringify(data));
         data.map(d => {
           d.time = new Date(Date.parse(d.time));
           d.time = d.time.toLocaleString();

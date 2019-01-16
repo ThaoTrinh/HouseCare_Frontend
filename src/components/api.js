@@ -189,12 +189,13 @@ var chooseWork = (workId) => {
   });
 };
 
-var createWork = (typeWork, description, time, timespan, location, salary) => {
+var createWork = (userId, typeWork, time, timespan, salary, location,description) => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
     job_instance.defaults.headers.common['Authorization'] = header;
     job_instance
       .post('/', {
+        userId: userId,
         type: typeWork,
         description: description,
         time: time,
@@ -235,6 +236,26 @@ var addWalletAddress = (userId, walletAddress) => {
   });
 };
 
+var addContractAddress = (workId, contractAddress) => {
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    job_instance.defaults.headers.common['Authorization'] = header;
+    job_instance
+      .post('/contractAddress', {
+        workId, contractAddress
+      })
+      .then(response => {
+        if (response['data']['success'] != true) {
+          return reject(response['data']['message']);
+        }
+        return resolve(response['data']['data']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
 module.exports = {
   signup,
   signin,
@@ -247,4 +268,5 @@ module.exports = {
   chooseWork,
   createWork,
   addWalletAddress,
+  addContractAddress
 };

@@ -30,9 +30,6 @@ class App extends React.Component {
     const drizzle = new Drizzle(options, drizzleStore);
     this.unsubscribe = drizzle.store.subscribe(() => {
       const drizzleState = drizzle.store.getState();
-
-      console.log(drizzleState.drizzleStatus);
-
       if (drizzleState.drizzleStatus.initialized) {
         this.setState({loading: false, drizzleState, drizzle});
       }
