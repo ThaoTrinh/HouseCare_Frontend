@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const options = { contracts: [Work]};
+    const options = { contracts: []};
     const drizzleStore = generateStore(options);
 
     const drizzle = new Drizzle(options, drizzleStore);

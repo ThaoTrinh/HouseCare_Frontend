@@ -9,13 +9,14 @@ import JobPosting from 'components/Helper/jobPosting';
 import Profile from 'components/profile';
 import Schedule from 'components/schedule';
 import ChangePassword from 'components/changePassword';
+import DataContract from 'components/dataContract';
 
 require('styles/App.css');
 
 export default class HelperPage extends React.Component {
   constructor() {
     super();
-    this.state = { showPopup: false , drizzleState: null};
+    this.state = { showPopup: false };
   }
   togglePopup() {
     this.setState({ showPopup: !this.state.showPopup });
@@ -32,12 +33,15 @@ export default class HelperPage extends React.Component {
           </Layout.Col>
           <Layout.Col span={20}>
             <div className="grid-content bg-purple-light">
-              <Route
-                exact
-                path="/users"
-                component={Profile}
-                header={Navigation}
-              />
+            <Route exact
+                  path ="/users"
+                  render = {(props) =>
+                  <Profile {...props}
+                  header={Navigation}
+                  drizzleState={drizzleState}
+                  drizzle = {drizzle}
+                  />}
+                />
               <Route
                 path="/users/reset_password"
                 component={ChangePassword}
@@ -59,11 +63,25 @@ export default class HelperPage extends React.Component {
                 />}
               />
 
-              <Route
-                path="/users/notification"
-                component={JobPosting}
-                header={Navigation}
-              />
+                <Route exact
+                  path ="/users/notification"
+                  render = {(props) =>
+                  <JobPosting {...props}
+                  header={Navigation}
+                  drizzleState={drizzleState}
+                  drizzle = {drizzle}
+                  />}
+                />
+                
+                <Route exact
+                  path ="/users/datacontract"
+                  render = {(props) =>
+                  <DataContract {...props}
+                  header={Navigation}
+                  drizzleState={drizzleState}
+                  drizzle = {drizzle}
+                  />}
+                />
             </div>
           </Layout.Col>
         </Layout.Row>

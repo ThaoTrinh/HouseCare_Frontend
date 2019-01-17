@@ -46,7 +46,6 @@ export default class Profile extends React.Component{
     
     api.getuser(id)
       .then(data => {
-        alert(data);
       })
       .catch(err => {
         alert(err);
@@ -59,53 +58,34 @@ export default class Profile extends React.Component{
     let walletAddress = '';
     api.getuser(id)
       .then(data => {
-        alert(JSON.stringify(data));
-        // Kiem tra xem neu data khong co wallet address thi
-        if (data.walletAddress == null){
-          //dung drizzle lay thong tin cua account neu co thi xac nhan de them thay doi thong tin wallet address
-          // Neu khong co hien thi thong bao de dang ki tren meta mask
-          if (!drizzleState.accounts){
-            alert("Don't have a wallet address! Please sign up in meta mask");
-          }
-          else{
-            walletAddress = drizzleState.accounts[0];
-            alert("Wallet address is got automatic from your computer!", walletAddress);
-            api.addWalletAddress(id, walletAddress)
-              .then(data => {
-                alert("Add wallet success");
-              })
-              .catch(err => {
-                alert(err);
-              })
-          }
+        if (data.walletAddress === null || data.walletAddress === undefined) {
+          walletAddress = drizzleState.accounts[0];
+          api.addWalletAddress(id, walletAddress)
+            .catch(err => {
+              alert(err);
+            })
         }
-
         else{
           walletAddress = data.walletAddress;
         }
-        //set trang thai cho user
+
         this.setState({
           name: data.name,
           username: data.username,
-          position: data.role == 0 ? 'helper' : 'hirer',
+          position: data.role === 0 ? 'helper' : 'hirer',
           gmail: data.email,
           address: data.address,
           walletAddress: walletAddress,
           experience: data.experience,
           description: data.description,
           sex: data.sex
-
         });
-        
-        // alert(JSON.stringify(data));
       })
       .catch(err => {
         alert(err);
       })
     }
 
-  
-  
   handleChange = name => value => {
     this.setState({[name]: value});
   }
@@ -177,7 +157,9 @@ export default class Profile extends React.Component{
 
             <Form.Item style={{marginLeft: "-160px"}}>
               <h5 className = "col-lg-2" style={{marginRight: 15}}>Position</h5>
-              <Radio value="helper" checked={this.state.positon === 'helper'} onChange={this.handleChange('position')}>Helper</Radio>
+              
+              <Radio value="helper" checked={this.state.position === 'helper'} onChange={this.handleChange('position')}>Helper</Radio>
+
               <Radio value="hirer" checked={this.state.position === 'hirer'} onChange={this.handleChange('position')}>Hirer</Radio>
             </Form.Item>
 

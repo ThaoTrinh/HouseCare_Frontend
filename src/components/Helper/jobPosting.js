@@ -1,11 +1,13 @@
 import React from 'react';
-import { Table, Button } from 'element-react';
+import { Table, Button,Notification } from 'element-react';
+import { Redirect } from 'react-router-dom';
 import api from 'components/api';
 export default class JobPosting extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      success: false,
       columns: [
         { label: 'Time', prop: 'time', width: 120, sortable: true },
         { label: 'Duration', prop: 'timespan', width: 180, sortable: true },
@@ -38,6 +40,7 @@ export default class JobPosting extends React.Component {
   }
 
   componentDidMount() {
+   
     api
       .getWorkList()
       .then(data => {
@@ -68,11 +71,18 @@ export default class JobPosting extends React.Component {
     // cap nhat lai helper cho cong viec
     const { data } = this.state;
     let workId = data[index]._id;
+    let id= sessionStorage.getItem('id');
+    let role = sessionStorage.getItem('role');
 
     api
       .chooseWork(workId)
       .then(data => {
-        alert("Choose Success");
+       this.setState({
+          success: true,
+        });
+        Notification.success({
+          title: 'Choose work success',
+        });
       })
       .catch(err => {
         //alert(JSON.stringify(data));
@@ -87,6 +97,7 @@ export default class JobPosting extends React.Component {
   }
 
   render() {
+    if (this.state.success) return <Redirect to="/users1/schedule" />;
     return (
       <Table
         style={{ width: '100%' }}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Notification, Loading } from 'element-react';
+import { Table, Button, Notification, Loading, MessageBox, Popover } from 'element-react';
 import * as moment from 'moment';
 
 import Web3 from 'web3';
@@ -12,6 +12,8 @@ export default class Schedule extends React.Component {
     super(props);
 
     this.state = {
+      newContractAddress: null,
+      currentContract: [],
       isLoading: false,
       drizzleState: null,
       columns: [
@@ -70,7 +72,19 @@ export default class Schedule extends React.Component {
             if (this.state.data[index].helper == 'Not Assigned')
               return <p>No Helper, no contract</p>;
             if (this.state.data[index].contractAddress)
-              return <p>{this.state.data[index].contractAddress}</p>;
+              return (
+                  <Button
+                    type="text"
+                    size="small"
+                    // onClick={this.getContract.bind(this, index)}
+                    onClick = {this.watchContract.bind(this, index)}
+                    
+                  >
+                    {this.state.data[index].contractAddress}
+                  </Button>
+              );
+            if (sessionStorage.getItem('role') === '0')
+              return <p>Waiting for contract</p>;
             return (
               <Button
                 type="text"
@@ -87,9 +101,14 @@ export default class Schedule extends React.Component {
     };
   }
 
+  watchContract(index) {
+    window.open("https://ropsten.etherscan.io/address/" + this.state.data[index].contractAddress);
+  }
+
   createContract(index) {
-    let id = sessionStorage.getItem('id');
     const { drizzle, drizzleState } = this.props;
+
+    const work = this.state.data[index];
 
     var web3 = new Web3(drizzle.web3.currentProvider);
     var myContract = new web3.eth.Contract(Work.abi);
@@ -108,21 +127,47 @@ export default class Schedule extends React.Component {
         gasPrice: '10000000000',
       })
       .then(newContractInstance => {
+        this.setState({
+          newContractAddress: newContractInstance.options.address
+        });
+        console.log(work);
+        return newContractInstance.methods.setData(
+          work._owner.walletAddress,
+          work._helper.walletAddress,
+          work._id,
+          work.address,
+          "",
+          parseInt(work.salary) * 1000,
+          moment(work.time).valueOf()
+        ).send({
+          from: drizzleState.accounts[0],
+          gas: 1500000,
+          gasPrice: '10000000000',
+        });
+      })
+      .then(() => {
         return api.addContractAddress(
           this.state.data[index]._id,
-          newContractInstance.options.address
+          this.state.newContractAddress
         );
       })
       .then(data => {
         Notification.success({
           title: 'Contract creation success',
+          onClick: () => {
+            window.open("https://ropsten.etherscan.io/address/" + this.state.newContractAddress);
+          },
+          offset: 300
         });
         // update data with newly returned data
         this.state.data[index] = data;
         this.forceUpdate();
       })
       .catch(err => {
-        alert(err);
+        Notification.error({
+          title: 'Contract creation error',
+        });
+        console.log(err);
       })
       .finally(() => {
         this.setState({
@@ -131,26 +176,26 @@ export default class Schedule extends React.Component {
       });
   }
 
-  getWorkList() {
-    api
-      .getWorkListOfUser()
-      .then(data => {
-        alert(JSON.stringify(data));
-        data.map(d => {
-          d.time = new Date(Date.parse(d.time));
-          d.time = d.time.toLocaleString();
-          d.timespan = moment.duration(d.timespan).asHours();
-          d.owner = d.owner.username;
-          d.helper = d.helper ? d.helper.username : 'Not Assigned';
-          d.status = d.status == 0 ? 'Due' : 'Done';
-          d.address = d.location;
-          d.salary = d.expectedSalary;
-        });
-        this.setState({ data });
-      })
-      .catch(err => {
-        alert(err);
+  getContract(index) {
+    const { drizzle, drizzleState } = this.props;
+
+    const work = this.state.data[index];
+
+    var web3 = new Web3(drizzle.web3.currentProvider);
+    var instance = new web3.eth.Contract(Work.abi, work.contractAddress);
+
+    instance.methods.getData().call({
+      from: drizzleState.accounts[0],
+      gas: 1500000,
+      gasPrice: '10000000000',
+    })
+    .then((result) => {
+      this.setState({
+        currentContract: result
       });
+      console.log(result)
+      // MessageBox.alert(JSON.stringify(result), 'Contract data');
+    })
   }
 
   componentDidMount() {
@@ -162,7 +207,9 @@ export default class Schedule extends React.Component {
           d.time = new Date(Date.parse(d.time));
           d.time = d.time.toLocaleString();
           d.timespan = moment.duration(d.timespan).asHours();
+          d._owner = d.owner;
           d.owner = d.owner.username;
+          d._helper = d.helper;
           d.helper = d.helper ? d.helper.username : 'Not Assigned';
           d.status = d.status == 0 ? 'Due' : 'Done';
           d.address = d.location;

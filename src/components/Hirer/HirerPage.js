@@ -10,6 +10,7 @@ import ChooseHelper from 'components/Hirer/chooseHelper';
 import Profile from 'components/profile';
 import ChangePassword from 'components/ChangePassword';
 import Schedule from 'components/schedule';
+import DataContract from 'components/dataContract';
 
 require('styles/App.css');
 
@@ -58,6 +59,16 @@ export default class HirerPage extends React.Component {
                 component={ChooseHelper}
                 header={SliderBar}
               />
+
+              <Route exact
+                  path ="/users1/datacontract"
+                  render = {(props) =>
+                  <DataContract {...props}
+                  header={Navigation}
+                  drizzleState={drizzleState}
+                  drizzle = {drizzle}
+                  />}
+                />
             </div>
           </Layout.Col>
         </Layout.Row>

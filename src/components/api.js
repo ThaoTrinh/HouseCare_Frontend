@@ -171,7 +171,7 @@ var getuser = id => {
   });
 };
 
-var chooseWork = (workId) => {
+var chooseWork = ( workId) => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
     job_instance.defaults.headers.common['Authorization'] = header;
